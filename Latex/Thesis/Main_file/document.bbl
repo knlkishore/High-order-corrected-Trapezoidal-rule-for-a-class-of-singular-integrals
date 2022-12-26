@@ -1,0 +1,90 @@
+\begin{thebibliography}{10}
+
+\bibitem{atkinson2008introduction}
+Kendall~E Atkinson.
+\newblock {\em An introduction to numerical analysis}.
+\newblock John wiley \& sons, 2008.
+
+\bibitem{epperson2013introduction}
+James~F Epperson.
+\newblock {\em An introduction to numerical methods and analysis}.
+\newblock John Wiley \& Sons, 2013.
+
+\bibitem{marin2014corrected}
+Oana Marin, Olof Runborg, and Anna-Karin Tornberg.
+\newblock Corrected trapezoidal rules for a class of singular functions.
+\newblock {\em IMA Journal of Numerical Analysis}, 34(4):1509--1540, 2014.
+
+\bibitem{kapur1997high}
+Sharad Kapur and Vladimir Rokhlin.
+\newblock High-order corrected trapezoidal quadrature rules for singular
+  functions.
+\newblock {\em SIAM Journal on Numerical Analysis}, 34(4):1331--1356, 1997.
+
+\bibitem{rokhlin1990end}
+Vladimir Rokhlin.
+\newblock End-point corrected trapezoidal quadrature rules for singular
+  functions.
+\newblock {\em Computers \& Mathematics with Applications}, 20(7):51--62, 1990.
+
+\bibitem{marin2012quadrature}
+Oana Marin.
+\newblock A quadrature rule for the singular kernels of laplace and stokes
+  equations over aclass of parameterizable surfaces.
+\newblock 2012.
+
+\bibitem{trefethen2014exponentially}
+Lloyd~N Trefethen and JAC Weideman.
+\newblock The exponentially convergent trapezoidal rule.
+\newblock {\em siam REVIEW}, 56(3):385--458, 2014.
+
+\bibitem{aguilar2005high}
+JC~Aguilar and Yu~Chen.
+\newblock High-order corrected trapezoidal quadrature rules for the coulomb
+  potential in three dimensions.
+\newblock {\em Computers \& Mathematics with Applications}, 49(4):625--631,
+  2005.
+
+\bibitem{aguilar2004high}
+JC~Aguilar and Yu~Chen.
+\newblock A high-order, fast algorithm for scattering calculation in two
+  dimensions.
+\newblock {\em Computers \& Mathematics with Applications}, 47(1):1--11, 2004.
+
+\bibitem{colton1998inverse}
+David~L Colton, Rainer Kress, and Rainer Kress.
+\newblock {\em Inverse acoustic and electromagnetic scattering theory},
+  volume~93.
+\newblock Springer, 1998.
+
+\bibitem{rokhlin1990rapid}
+Vladimir Rokhlin.
+\newblock Rapid solution of integral equations of scattering theory in two
+  dimensions.
+\newblock {\em Journal of Computational physics}, 86(2):414--439, 1990.
+
+\bibitem{duan2009high}
+Ran Duan and Vladimir Rokhlin.
+\newblock High-order quadratures for the solution of scattering problems in two
+  dimensions.
+\newblock {\em Journal of Computational Physics}, 228(6):2152--2174, 2009.
+
+\bibitem{bruno2001fast}
+Oscar~P Bruno and Leonid~A Kunyansky.
+\newblock A fast, high-order algorithm for the solution of surface scattering
+  problems: basic implementation, tests, and applications.
+\newblock {\em Journal of Computational Physics}, 169(1):80--110, 2001.
+
+\bibitem{wu2020zeta}
+Bowei Wu and Per-Gunnar Martinsson.
+\newblock Zeta correction: A new approach to constructing corrected trapezoidal
+  quadrature rules for singular integral operators.
+\newblock {\em arXiv preprint arXiv:2007.13898}, 2020.
+
+\bibitem{arnold2001concise}
+Douglas~N Arnold.
+\newblock A concise introduction to numerical analysis.
+\newblock {\em Institute for Mathematics and its Applications, Minneapolis},
+  2001.
+
+\end{thebibliography}

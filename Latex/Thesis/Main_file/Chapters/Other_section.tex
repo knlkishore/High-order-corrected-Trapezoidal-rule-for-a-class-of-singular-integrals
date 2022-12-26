@@ -1,0 +1,874 @@
+\documentclass[../document.tex]{subfiles}
+\begin{document}
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	\chapter{Concluding Remarks}
+	
+	
+	
+	We started this thesis by first reviewing the simple and composite Trapezoidal rule and illustrating its use via the approximation of Integral involving smooth functions in Chapter-1.
+
+	\vspace{10mm}
+
+	In the next chapter, we discussed singular integrands and utilised various integral methods such as "change in variables" and "Analytic treatment of Singularity" to deal with such integrals. In the change in variables method, we investigated how to integrate functions having Singularity at endpoints of singular functions numerically. In the Analytic treatment of the Singularity method, we learned how to integrate functions having a finite number of singular points numerically with high accuracy. After this, we examined the error in the approximation of Trapezoidal rule via \emph{Euler–Maclaurin formula} and how it converges to high order for smooth and periodic function.  Then we discussed the Endpoint corrections to the Trapezoidal rule and Investigated how Endpoint corrected Trapezoidal rule gives high order convergence for smooth and non-periodic functions. Then we further extended the "Endpoint corrected Trapezoidal rule"  to "Endpoint corrected Trapezoidal rule for singular functions" to be able able to solve singular Integral of a certain class by adding another set of correction coefficients. As both types of corrections required precomputed or pre-corrected values. This corrected  Trapezoidal rule is called the \emph{"Pre-corrected trapezoidal rule"}.
+
+	\vspace{10mm}
+
+	In the Third Chapter, we constructed and demonstrated how, via the Nystrom method, how Fredholm integral equation of the second kind could be approximated via the Trapezoidal rule.
+	After that, we listed the calculated correction coefficients for the Precorrected trapezoidal rule and then illustrated the "corrected trapezoidal rule" to solve Integral equations associated with Real-world problem like \emph{Direct acoustic obstacle scattering problem in $\Real^2$ }.
+
+	
+	\vspace{10mm}
+	
+	We sincerely hope that the reader has developed an interest in the Simplicity of the Trapezoidal rule and how it can be modified to solve numerous practical, real-world problems.
+
+	
+	\section*{Future work}
+
+	Through this was just one application of the "Precorrected Trapezoidal rule". In the Literature, there are techniques to use the "Precorrected Trapezoidal rule" to solve several significant practical problems such as wave scattering, image processing, and medical imaging are shown in \cite{rokhlin1990rapid,duan2009high,bruno2001fast}.  Also, Trapezoidal rule compatibility with Fast Fourier Transform adds another ton of other applications.
+	
+	\vspace{6mm}
+	
+	Also, recently, a new technique for the computation of pre-corrected weights is reported in \cite{wu2020zeta}. Rules described in this paper can be seen as a Hybrid of both Colton-Kress Qradrature \cite{colton1998inverse} and corrected trapezoidal quadrature of Kapur and Rokhlin \cite{kapur1997high}. The new method combines both methods' strengths and attains high-order convergence, numerical stability, ease of implementation, and compatibility with the "fast" algorithms (such as the Fast Multipole Method or Fast Direct Solvers).
+
+	\vspace{6mm}
+
+
+	
+
+	
+	
+	
+	
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------	
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	
+	
+	%	
+	%	
+	%	\newpage
+	%	\vspace*{\stretch{1}}
+	%	
+	%	\begin{center}
+	%		\Huge{\MakeUppercase{\textbf{Appendices}}}
+	%	\end{center}
+	%	\thispagestyle{empty}%
+	%	\vspace*{\stretch{1}}
+	%	
+	%	\addcontentsline{toc}{chapter}{Appendices}
+	%	
+	%
+	%	
+	%	
+	%	
+	%	
+	%	
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------
+	%%----------------------------New-Instructions--------------------------------
+	\setcounter{chapter}{0}% Equivalent to letter before A
+	\renewcommand{\thechapter}{\Alph{chapter}}
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------	
+	
+	
+	
+	
+	
+	
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------	
+	%--------------------------------------------------------------------------
+	\begin{appendices}
+		
+		%--------------------------------------------------------------------------	
+		%Appendix-A----Contains proof for endpoint corrections---------------------
+		\chapter{}
+		
+		We shall now look at a proof of Theorem \ref{lagrange_uniform}, also known as the Lagrange Interpolation for Equally-Spaced abscissa.
+		
+		
+		%--------------------------------------------------------------------------	
+		\begin{customthm}{\ref{lagrange_uniform}}[Lagrange Interpolation for Equally-Spaced abscissa] 
+			
+			Suppose $a,b$ are a pair of real number such that $a<b$ , $m \ge 3$ be an integer and $h = \frac{b-a}{m-1}$. 
+			
+			let $f \in C^{m}[a-mh,b+mh]$ and equispaced points $x_k$ be defined as  $x_k  = \frac{b-a}{2} +kh$.
+			Then, for any real number $p$ there exists a real number 
+			$\xi , -mh <\xi<mh $, such that
+			
+			\begin{equation}
+				f(x_0 + ph) = \sum_{k} \mathcal{A}_{k}^{m} f(x_k) + \mathcal{R}_{m-1,p}
+				\tag{\ref{l11}}
+			\end{equation}
+			where $k$ varies from
+			
+			% \begin{align*}
+			%     \frac{1}{2} (m-2) \leq k \leq \frac{1}{2}m &  \quad 
+			%     \textit{for even m}\\
+			%     \frac{1}{2} (m-1) \leq k \leq \frac{1}{2}(m-1) & \quad 
+			%     \textit{for odd m}
+			% \end{align*}
+			
+			
+			$$
+			-\frac{1}{2}(m-2) \leq k \leq \frac{1}{2}m  \quad 
+			\textit{for even m}
+			$$
+			$$
+			-\frac{1}{2}(m-1) \leq k \leq \frac{1}{2}(m-1)  \quad 
+			\textit{for odd m}
+			$$
+			
+			with
+			$$
+			\mathcal{A}_{k}^{m}(p) = 
+			\frac{ (-1)^{\frac{m-1}{2}+k} }{
+				(\frac{m-1}{2} + k)!
+				(\frac{m-1}{2} - k)!
+				(p-k)}
+			\sum_{t}(p-t)
+			$$
+			and
+			$$
+			\mathcal{R}_{m-1,p} = \frac{ h^{m} }{m!} f^{(m)}(\xi)
+			\sum_{n} (p-n)
+			$$
+			here both $t$ and $n$ varies same as $k$. 
+		\end{customthm}
+		%---------------------------------------------------------
+		\begin{proof}
+			Assuming $m$ to be odd.
+			For a function $f \in C^{m}[a-mh,b+mh]$ ,its Lagrange interpolation polynomial constructed from  equispaced points 
+			$$
+			x_{-\frac{1}{2}(m-1)} , x_{-\frac{1}{2}(m-1)+1} , .......
+			, x_{\frac{1}{2}(m-1)-1} , x_{\frac{1}{2}(m-1)}
+			$$
+			
+			
+			% \begin{equation*} \label{nodes}
+			% \begin{split}
+			% \Bigg[
+			% \left(-\frac{1}{2}(m-1) , f(-\frac{1}{2}(m-1)) \right) , 
+			% \left(-\frac{1}{2}(m-1) +1 , f(-\frac{1}{2}(m-1) +1 ) \right),\\
+			% ......
+			% ,\left(\frac{1}{2}(m-1), f(\frac{1}{2}(m-1)) \right)
+			% \Bigg]
+			% \end{split}
+			% \end{equation*}
+			
+			
+			is given by
+			
+			
+			\begin{equation} 
+				\mathcal{L}_{m-1}(x) = 
+				\sum_{ j=-\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+				l_j(x_j) f(x_j)
+			\end{equation}
+			and,
+			
+			\begin{equation} \label{main_eqn}
+				f(x) =  
+				\sum_{ j=-\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+				l_j(x_j) f(x_j) + R_{m-1}(x)
+			\end{equation}
+			
+			
+			with,
+			\begin{equation*} 
+				l_j(x) = 
+				\sum_{i = -\frac{1}{2}(m-1) , i \neq j}^{\frac{1}{2}(m-1)} 
+				\frac{x - x_i}{x - x_j}
+			\end{equation*}
+			
+			\begin{equation*} 
+				R_{m-1}(x) =  \frac{ f^{(m)}(\xi) }{ m! }
+				\bigg[  
+				\sum_{j = -\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+				x-x_j
+				\bigg]
+			\end{equation*}
+			
+			
+			
+			We can write $x$ as $x = x_0 + ph $ for some real number $p$.
+			% Assuming $m$ to be odd.
+			% Constructing the Lagrange interpolation polynomial at equispaced points 
+			% \begin{equation*} \label{nodes}
+			% \begin{split}
+			% \Bigg[
+			% \left(-\frac{1}{2}(m-1) , f(-\frac{1}{2}(m-1)) \right) , 
+			% \left(-\frac{1}{2}(m-1) +1 , f(-\frac{1}{2}(m-1) +1 ) \right),\\
+			% ......
+			% ,\left(\frac{1}{2}(m-1), f(\frac{1}{2}(m-1)) \right)
+			% \Bigg]
+			% \end{split}
+			% \end{equation*}
+			
+			\begin{equation}   \label{remainder_final}
+				\begin{split}
+					R_{m-1}(x) &=  R_{m-1}(x_0 + ph)  
+					=\frac{ f^{(m)}(\xi) }{ m! }
+					\bigg[  
+					\sum_{j = -\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+					x-x_j
+					\bigg] 
+					\\
+					&=\frac{ f^{(m)}(\xi) }{ m! }
+					\bigg[  
+					\Big(x - x_{-\frac{1}{2}(m-1)} \Big)
+					\Big(x - x_{-\frac{1}{2}(m-1)+1} \Big)
+					.......
+					\Big(x - x_{\frac{1}{2}(m-1)} \Big)
+					\bigg]  
+					\\
+					&=\frac{ f^{(m)}(\xi) }{ m! }
+					\bigg[  
+					\Big(
+					x_0 +ph -x_0 + \frac{1}{2}(m-1)h
+					\Big)
+					....
+					\Big(
+					x_0 +ph -x_0 - \frac{1}{2}(m-1)h
+					\Big)
+					\bigg] 
+					\\
+					&=\frac{ f^{(m)}(\xi) }{ m! }
+					\bigg[  
+					\Big(
+					ph + \frac{1}{2}(m-1)h
+					\Big)
+					....
+					\Big(
+					ph- \frac{1}{2}(m-1)h
+					\Big)
+					\bigg] 
+					\\
+					&=\frac{ f^{(m)}(\xi) }{ m! }
+					\bigg[  
+					h^{m}
+					\Big(
+					p + \frac{1}{2}(m-1)
+					\Big)
+					....
+					\Big(
+					p- \frac{1}{2}(m-1)
+					\Big)
+					\bigg] 
+					\\
+					&=\frac{ f^{(m)}(\xi) }{ m! }
+					\bigg[  
+					h^{m}
+					\Big(
+					p + \frac{1}{2}(m-1)
+					\Big)
+					....
+					\Big(
+					p- \frac{1}{2}(m-1)
+					\Big)
+					\bigg] 
+					\\
+					&=\frac{ f^{(m)}(\xi) }{ m! } h^{m}
+					\sum_{n = -\frac{1}{2}(m-1)}^{\frac{1}{2}(m-1)}
+					(p-n)
+					\\
+					&=\mathcal{R}_{m-1,p}
+				\end{split}
+			\end{equation}
+			
+			
+			
+			\begin{equation*}
+				\begin{split}
+					l_k(x) &=  l_k( x_0 + ph ) =
+					\sum_{i = -\frac{1}{2}(m-1) , i \neq k}^{\frac{1}{2}(m-1)} 
+					\frac{x - x_i}{x_k - x_i} 
+					\\
+					&=\Bigg[\frac{
+						\big(x  - x_{-\frac{1}{2}(m-1)} \big)
+						......
+						\big(x  - x_{k-1} \big)
+						\big(x  - x_{k+1} \big)
+						.......
+						\big(x - x_{\frac{1}{2}(m-1)} \big)
+					}{
+						\big(x_k - x_{-\frac{1}{2}(m-1)} \big)
+						......
+						\big(x_k  - x_{k-1} \big)
+						\big(x_k  - x_{k+1} \big)
+						.......
+						\big(x - x_{\frac{1}{2}(m-1)} \big)
+					}
+					\Bigg]
+				\end{split}
+			\end{equation*}
+			
+			\begin{equation}        \label{alpha_beta}
+				\begin{split}
+					&=\left[ \frac{
+						\splitfrac{
+							\Big(
+							x_0 +ph -x_0 + \frac{1}{2}(m-1)h
+							\Big)
+							....
+							\Big(
+							x_0 +ph -x_0 - (k-1)h
+							\Big)
+							\Big(
+							x_0 +ph -x_0 - (k+1)h
+							\Big)
+						}{
+							....
+							\Big(
+							x_0 +ph -x_0 - \frac{1}{2}(m-1)h
+							\Big)
+						}
+					}{
+						\splitfrac{
+							\Big(
+							x_0 +kh -x_0 + \frac{1}{2}(m-1)h
+							\Big)
+							....
+							\Big(
+							x_0 +kh -x_0 - (k-1)h
+							\Big)
+							\Big(
+							x_0 +kh -x_0 - (k+1)h
+							\Big)
+						}{
+							....
+							\Big(
+							x_0 +kh -x_0 - \frac{1}{2}(m-1)h
+							\Big)
+						}
+					}
+					\right]
+					\\
+					% &=\left[ \frac{
+					%             \Big(
+					%             ph + \frac{1}{2}(m-1)h
+					%             \Big)
+					%             ....
+					%             \Big(
+					%             ph - \frac{1}{2}(m-1)h
+					%             \Big)
+					%             \Big(
+					%             ph  - \frac{1}{2}(m-1)h
+					%             \Big)
+					%             ....
+					%             \Big(
+					%             ph  - \frac{1}{2}(m-1)h
+					%             \Big)
+					% }{
+					%             \Big(
+					%             ph + \frac{1}{2}(m-1)h
+					%             \Big)
+					%             ....
+					%             \Big(
+					%             ph - \frac{1}{2}(m-1)h
+					%             \Big)
+					%              \Big(
+					%             ph  - \frac{1}{2}(m-1)h
+					%             \Big)
+					%             ....
+					%             \Big(
+					%             ph  - \frac{1}{2}(m-1)h
+					%             \Big)
+					% }
+					% \right]
+					% \\
+					&=\left[ \frac{
+						\Big(
+						p + \frac{1}{2}(m-1)
+						\Big)
+						....
+						\Big(
+						p - (k-1)
+						\Big)
+						\Big(
+						p  - (k+1)
+						\Big)
+						....
+						\Big(
+						p  - \frac{1}{2}(m-1)
+						\Big)
+					}{
+						\Big(
+						k + \frac{1}{2}(m-1)
+						\Big)
+						....
+						\Big(
+						k - (k-1)
+						\Big)
+						\Big(
+						k  - (k+1)
+						\Big)
+						....
+						\Big(
+						k  - \frac{1}{2}(m-1)
+						\Big)
+					}
+					\right] \frac{\Big(p-k\Big)}{\Big(p-k\Big)}
+					\\
+					&=\left[ \frac{
+						\Big(
+						p + \frac{1}{2}(m-1)
+						\Big)
+						....
+						\Big(
+						p - k+1
+						\Big)
+						\Big(p-k\Big)
+						\Big(
+						p  - k-1
+						\Big)
+						....
+						\Big(
+						p  - \frac{1}{2}(m-1)
+						\Big)
+					}{
+						\Big(
+						k + \frac{1}{2}(m-1)
+						\Big)
+						....
+						\Big(
+						k - k + 1
+						\Big)
+						\Big(
+						k  - k -1
+						\Big)
+						....
+						\Big(
+						k  - \frac{1}{2}(m-1)
+						\Big)
+					}
+					\frac{1}{  \Big(p-k\Big)}
+					\right] 
+					\\
+					&=\frac{ \alpha }{ \beta }
+				\end{split}
+			\end{equation}
+			
+			where 
+			$\alpha = 
+			\big(
+			p + \frac{1}{2}(m-1)
+			\big)
+			....
+			\big(
+			p - k+1
+			\big)
+			\big(p-k\big)
+			\big(
+			p  - k-1
+			\big)
+			....
+			\big(
+			p  - \frac{1}{2}(m-1)
+			\big)
+			% = \prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+			$
+			, $\beta =   \big(
+			k + \frac{1}{2}(m-1)
+			\big)
+			....
+			\big(
+			k - k + 1
+			\big)
+			\big(
+			k  - k -1
+			\big)
+			....
+			\big(
+			k  - \frac{1}{2}(m-1)
+			\big)
+			\big(p-k\big)$
+			
+			Now,
+			\begin{equation*}
+				\begin{split}
+					\beta   &= \big(
+					k + \frac{1}{2}(m-1)
+					\big)
+					....
+					\big(
+					k - k + 1
+					\big)
+					\big(
+					k  - k -1
+					\big)
+					....
+					\big(
+					k  - \frac{1}{2}(m-1)
+					\big)
+					\big(p-k\big)
+					\\
+					&= \big(
+					k + \frac{1}{2}(m-1)
+					\big)
+					....
+					\big(  2  \big)
+					\big(  1  \big)
+					\big( -1  \big)
+					\big( -2  \big)
+					....
+					\big(
+					k  - \frac{1}{2}(m-1)
+					\big)
+					\big(p-k\big)
+					\\
+					&= \Big( k + \frac{1}{2}(m-1) \Big)! 
+					\big( -1  \big)
+					\big( -2  \big)
+					....
+					\big(
+					k  - \frac{1}{2}(m-1)
+					\big)
+					\big(p-k\big)
+					\\
+					&= \Big( k + \frac{1}{2}(m-1) \Big)! 
+					\Big(  -1  \Big)^{\frac{m-1}{2}-k}    
+					\big( 1  \big)
+					\big( 2  \big)
+					....
+					\big(
+					\frac{1}{2}(m-1) -k
+					\big)
+					\big(p-k\big)
+					\\
+					&= \Big( \frac{1}{2}(m-1) +k \Big)! 
+					\Big(  -1  \Big)^{\frac{m-1}{2}-k}    
+					\Big( \frac{1}{2}(m-1) -k \Big)! 
+					\Big( p - k \Big)
+					%	\\
+					%	\alpha  &=   \prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  \Big(p-t\Big)
+				\end{split}
+			\end{equation*}
+			
+			putting $\alpha , \beta$ back in equation \ref{alpha_beta}
+			\begin{equation*}
+				\begin{split}
+					l_k(x) &= 
+					\frac{ \alpha }{ \beta } 
+					\\
+					&=
+					\frac{\prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)}{
+						\Big( \frac{1}{2}(m-1) +k \Big)! 
+						\Big(  -1  \Big)^{\frac{m-1}{2}-k}    
+						\Big( \frac{1}{2}(m-1) -k \Big)! 
+						\Big( p - k \Big)
+					}
+					% \Big(
+					%  \prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+					% \Big)
+				\end{split}
+			\end{equation*}
+			
+			\begin{equation} \label{A_final}
+				\begin{split}
+					&=
+					\frac{
+						\Big(  -1  \Big)^{m-1}    
+					}{
+						\Big(  -1  \Big)^{m-1}    
+					}
+					\frac{
+						\Big(  -1  \Big)^{k-\frac{m-1}{2}}    
+						\prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+					}{
+						\Big( \frac{1}{2}(m-1) +k \Big)! 
+						\Big( \frac{1}{2}(m-1) -k \Big)! 
+						\Big( p - k \Big)
+					}
+					\\
+					&=
+					\frac{ (-1)^{\frac{m-1}{2}+k} }{
+						(\frac{m-1}{2} + k)!
+						(\frac{m-1}{2} - k)!
+						(p-k)}
+					\prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+					\\
+					&=
+					\mathcal{A}_{k}^{m}(p)
+				\end{split}
+			\end{equation}
+			
+			By using equations \ref{A_final} , \ref{main_eqn} , \ref{remainder_final}
+			
+			$$
+			f(x) = f(x_0 + ph) = \sum_{k} \mathcal{A}_{k}^{m} f(x_k) + \mathcal{R}_{m-1,p}
+			$$
+			where k varies from $-\frac{1}{2}(m-1) \leq k \leq \frac{1}{2}(m-1)  \quad  \textit{,} \quad
+			\textit{m is odd} $.
+			\vspace{5mm}
+			
+			
+			Similarly, for even $m$, we can get the result by constructing Lagrange interpolating polynomial from equispaced points. 
+			$$
+			x_{-\frac{1}{2}(m-2)} , x_{-\frac{1}{2}(m-2)+1} , .......
+			, x_{\frac{1}{2}m-1} , x_{\frac{1}{2}m}
+			$$
+			
+		\end{proof}
+		\pagebreak
+		%--------------------------------------------------------------------------	
+		%--------------------------------------------------------------------------	
+		%--------------------------------------------------------------------------	
+		%--------------------------------------------------------------------------	\\
+		%--------------------------------------------------------------------------	
+		%--------------------------------------------------------------------------	
+		%--------------------------------------------------------------------------	
+		%--------------------------------------------------------------------------	
+		We shall now look at a proof of Theorems \ref{recussive} and \ref{righr_end_order_theorem} which have been taken from \cite{kapur1997high}.
+		
+		
+		\begin{customthm}{\ref{recussive}}   
+			Suppose $m,l,k$ are integers and coefficients $a^{m}_{k,l}$ are defined by recussive relations
+			
+			\begin{subequations}  
+				\begin{align}
+					&a^{3}_{1,1} = 1 \tag{\ref{recussive_eqn_A}}   \\
+					&a^{3}_{1,2} = 1 \tag{\ref{recussive_eqn_B}}   \\
+					&a^{2k+1}_{k,l} = (k - k^2) a^{2k-1}_{k-1,l} + a^{2k-1}_{k-1,l}  + a^{2k-1}_{k-1,l-2}  \tag{\ref{recussive_eqn_C}}   \\
+					&a^{m+2}_{k,l} = a^{m}_{k,l-2} -
+					\big( \frac{m+1}{2} \big)^2 a^{m}_{k,l} \tag{\ref{recussive_eqn_D}}   
+				\end{align}
+			\end{subequations}
+			
+			with $a^{m}_{k,l} = 0$ $\forall$ $k \leq 0 $ or $l \leq 0$ or $m \leq 1$.
+			
+			then
+			$$
+			\mathcal{A}_{k}^{m} (p) = 
+			\frac{		(-1)^{\frac{m-1}{2} + k}		
+			}{	\big( \frac{m-1}{2} +1 \big)!
+				\big( \frac{m-1}{2} -1 \big)! 
+			}
+			\sum_{l=1}^{	\frac{m-1}{2}	}
+			a^{m}_{k,l} p^{l}
+			$$
+			
+		\end{customthm}
+		\begin{proof}
+			From \eqref{lagrange_uniform},
+			
+			\begin{equation*}
+				\begin{split}
+					\mathcal{A}_{k}^{m}(p) &= 
+					\frac{ (-1)^{\frac{m-1}{2}+k} }{
+						(\frac{m-1}{2} + k)!
+						(\frac{m-1}{2} - k)!
+						(p-k)}
+					\sum_{k =-\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}
+					(p-t)
+					\\
+					&= 
+					\frac{ (-1)^{\frac{m-1}{2}+k} }{
+						(\frac{m-1}{2} + k)!
+						(\frac{m-1}{2} - k)!
+					}
+					C_k^m(p)
+				\end{split}
+			\end{equation*}
+			
+			where
+			\begin{equation} \label{120}
+				C_k^m(p) = \frac{1}{(p-k)} \sum_{k =-\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)} (p-t)
+			\end{equation}
+			
+			To prove all four recursive conditions, it is sufficient to show that.
+			
+			\begin{equation}  \label{121}
+				C_k^m(p) = \frac{1}{(p-k)} \sum_{l=1 }^{m-1} a_{k,l}^{m}p^l
+			\end{equation}
+			
+			This can be shown by induction. Indeed, if
+			$m = 3$, then, due to \eqref{120},
+			\begin{equation} \label{122}
+				C_1^3(p) = p^2 +p,
+			\end{equation}
+			
+			which is equivalent to \eqref{recussive_eqn_A} , \eqref{recussive_eqn_B}. Assume now that for some $m,k$ such that $	-\frac{1}{2}(m-1) \leq k \leq \frac{1}{2}(m-1) $
+			
+			
+			\begin{equation}  \label{123}
+				C_k^m(p) = \frac{1}{(p-k)} \sum_{l=1 }^{m-1} a_{k,l}^{m}p^l
+			\end{equation}
+			
+			Combining \eqref{120} and \eqref{123}, we have
+			\begin{equation} \label{124}
+				\begin{split}
+					C_k^{m+2}(p) &= \Big(p +\frac{m+1}{2}\Big) \Big(p -\frac{m+1}{2}\Big) 
+					\sum_{l=1}^{\frac{m-1}{2}} a_{k,l}^{m}p^l
+					\\
+					&= \Bigg(p^2 -\Big( \frac{m+1}{2}\Big)^2\Bigg) 
+					\sum_{l=1}^{\frac{m-1}{2}} a_{k,l}^{m}p^l
+					\\
+					&= \sum_{l=1}^{\frac{m-1}{2}} a_{k,l}^{m} p^{l+2}  - \Big( \frac{m+1}{2}\Big)^2 
+					\sum_{l=1}^{\frac{m-1}{2}} a_{k,l}^{m} p^{l}
+				\end{split}
+			\end{equation}
+			
+			which is equivalent to \eqref{recussive_eqn_D}. Now, assume that for some $k$
+			
+			\begin{equation} \label{125}
+				C_k^{m+2}(p) = 	\sum_{l=1}^{k} a_{k,l}^{2k+1}p^l
+			\end{equation}
+			
+			Combining \eqref{125} and \eqref{120}, we have
+			
+			\begin{equation}
+				\begin{split}
+					C_k^{2k+3}(p) &= \big(p-k\big)\big(p-(k+1)\big) \sum_{l=1}^{k} a_{k,l}^{2k+1} p^l
+					\\
+					&= \big(p^2 +p -(k^2+k) \big) \sum_{l=1}^{k} a_{k,l}^{2k+1} p^l
+					\\
+					&= \sum_{l=1}^{k} a_{k,l}^{2k+1} p^{l+1} 
+					- \big(k^2+k\big)\sum_{l=1}^{k}  a_{k,l}^{2k+1}p^l
+				\end{split}
+			\end{equation}
+			
+			which is equivalent to \eqref{recussive_eqn_C}.
+		\end{proof}
+		%--------------------------------------------------------------------------
+		%--------------------------------------------------------------------------
+		%--------------------------------------------------------------------------
+		%--------------------------------------------------------------------------
+		
+		Before we get to the theorem-\ref{righr_end_order_theorem}.
+		and its proof, we need to see the following lemmas.
+		
+		\begin{lemma} \label{A1}
+			If $k \geq 2$ is an integer and $a^{m}_{k,l}$ is defined in Lemma-\eqref{recussive}, then
+			\begin{equation} \label{127}
+				|(l)!  \cdot  a^{2k+1}_{k,l}  | <
+				|(l+2)! \cdot  a^{2k+1}_{k,l+2}  |
+			\end{equation}
+			for all $l=1,2,\cdots,2k-3$.
+			
+		\end{lemma}
+		
+		\begin{lemma} \label{A2}
+			If $k \geq 2$ is an integer, and $a^{m}_{k,l}$ is defined in Lemma-\eqref{recussive}, then
+			\begin{equation} \label{131}
+				|(l)!  \cdot  a^{m}_{k,l}  | <
+				|(l+2)! \cdot  a^{m}_{k,l+2}  |
+			\end{equation}
+			for all $m\geq2k+1$ and $l=1,2,\cdots,2k-3$.
+		\end{lemma}	
+		
+		\begin{lemma} \label{A3}
+			If $m,k$ are integers such that $m \geq 3$ is odd , and $-\frac{m-1}{2}\leq k \leq \frac{m-1}{2}$ then
+			\begin{equation} \label{135}
+				|(1)!\cdot a_{k,1}^{m}| <
+				|(3)!\cdot a_{k,3}^{m}| <
+				|(5)!\cdot a_{k,5}^{m}| <
+				\cdots
+				|(m-2)!\cdot a_{k,m-2}^{m}|
+			\end{equation}
+		\end{lemma}	
+		
+		\begin{lemma} \label{A4}
+			If $m\geq3$ is odd then,
+			\begin{equation} \label{136}
+				\frac{\big( m-1 \big)\big( m-2 \big)!}{2\big( (\frac{m-1}{2})!\big)} <
+				\frac{(2\pi)^{m-1}}{4}
+			\end{equation}
+		\end{lemma}	
+		
+		
+		\begin{lemma} \label{A5}
+			If $m \geq 3$ is odd, then
+			\begin{equation} \label{140}
+				| \D_{i,k}^{m} | < \frac{(2\pi)^{m-1}}{4}
+			\end{equation}
+			for any $k,i$ such that $-\frac{m-1}{2} \leq k \leq \frac{m-1}{2}$, and 
+			$1 \leq i \leq \frac{m-1}{2}$
+		\end{lemma}	
+		
+		\begin{lemma}
+			For any $l\geq1$, the Bernoulli numbers $\Bernoulli_{2l}$ satisfies the inequality
+			\begin{equation} \label{145}
+				\Bigg|
+				\frac{\Bernoulli_{2l}}{(2l)!}
+				\Bigg|
+				<
+				\frac{4}{(2\pi)^{2l}}
+			\end{equation} 
+		\end{lemma}	
+		
+		
+		Now to proof of Theorem-\eqref{righr_end_order_theorem}
+		\begin{proof}
+			By Combing equation \eqref{correction_constants_beta} and \eqref{non_singular_corrected_trapz_rule} , we obtain
+			\begin{equation}
+				\begin{split}
+					\Trapz_{\alpha,\beta}(f) &= \Trapz_{\alpha^m}(f) +
+					h \sum_{k = -\frac{m-1}{2}}^{\frac{m-1}{2}} 
+					\big(
+					f(b+kh) - f(b-kh)
+					\big)
+					\sum_{l=1}^{\frac{m-1}{2}} 
+					\frac{ \D_{i,k}^{m} \Bernoulli_{2l}}{(2l)!}
+					\\
+					&= \Trapz_{\alpha^m}(f) +
+					\sum_{l=1}^{\frac{m-1}{2}} \frac{h^{2l}\Bernoulli_{2l}}{(2l)!}
+					\Bigg(
+					\sum_{k=-\frac{m-1}{2}}^{\frac{m-1}{2}}
+					\frac{%num
+						\D_{i,k}^{m} 
+						\big(
+						f(b+kh) -f(a+kh)
+						\big)
+					}
+					{%den
+						h^{2i-1}
+					}			 
+					\Bigg)
+				\end{split}
+			\end{equation}
+			
+			Finally, combining \eqref{20}, \eqref{150}, and Euler–Maclaurin formula
+			, we have
+			\begin{equation}
+				\Trapz_{\alpha^m}(f) =
+				\Trapz_n(f) + \sum_{l=1}^{\frac{m-1}{2}} \frac{h^{2l}\Bernoulli_{2l}}{(2l)!}
+				\big(
+				f^{(2i-1)}(b)  	f^{(2i-1)}(a)
+				\big)
+				+ \BigO(h^{m+1})
+			\end{equation}
+			
+			
+			
+			
+		\end{proof}
+		
+		
+		
+		
+		
+		
+		
+	\end{appendices}
+	%--------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------
+	%%----------------------------------------------------------------------------	
+	
+	
+	
+	
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	
+	
+\end{document}

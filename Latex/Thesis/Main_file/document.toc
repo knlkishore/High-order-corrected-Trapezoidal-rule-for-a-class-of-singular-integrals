@@ -1,0 +1,31 @@
+\babel@toc {english}{}
+\contentsline {chapter}{Certificate}{ii}{Doc-Start}%
+\contentsline {chapter}{Academic Integrity and Copyright Disclaimer}{iii}{Doc-Start}%
+\contentsline {chapter}{Acknowledgement}{iv}{Doc-Start}%
+\contentsline {chapter}{Abstract}{v}{Doc-Start}%
+\contentsline {chapter}{List of Symbols or Abbreviations}{vi}{Doc-Start}%
+\contentsline {chapter}{List of Figures}{vii}{chapter*.1}%
+\contentsline {chapter}{List of Tables}{viii}{chapter*.2}%
+\contentsline {chapter}{\numberline {1.}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Trapezoidal Rule}{3}{section.1.1}%
+\contentsline {chapter}{\numberline {2.}Singular integration \& Pre-corrected trapezoidal rule}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Change of variable}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Analytic treatment of Singularity}{10}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Error in Trapezoidal rule}{12}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Endpoints correction}{13}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Correction for singular functions}{16}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Right-end and left-end corrected Trapeziodal rule}{16}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Endpoints correction for singular functions}{17}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Singularites of the forms $|x|^{\lambda }$ and $log(|x|)$ }{19}{subsection.2.5.3}%
+\contentsline {chapter}{\numberline {3.}Applications of Pre-corrected Trapezoidal rule }{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Nyström method}{21}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Correction weights}{23}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Quadrature weights $\alpha _{k}^m$ for nonsingular functions}{23}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Quadrature weights $\beta _{k}^m$ for singular functions}{24}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Numerical results}{26}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Direct acoustic obstacle scattering problem in $\mathbb {R}^2$}{26}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Calculation of convolutions}{27}{subsection.3.3.2}%
+\contentsline {chapter}{\numberline {4.}Concluding Remarks}{30}{chapter.4}%
+\contentsline {chapter}{Appendices}{32}{section*.15}%
+\contentsline {chapter}{\numberline {A.}}{33}{appendix.a.A}%
+\contentsline {chapter}{Bibliography}{41}{appendix*.25}%

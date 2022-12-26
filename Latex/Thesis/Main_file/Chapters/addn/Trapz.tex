@@ -1,0 +1,206 @@
+\documentclass[../document.tex]{subfiles}
+\begin{document}
+	
+	\chapter{Trapezoidal rule}
+	Among all existing Quadrature rules, the \emph{Trapezoidal rule} is the most simple  and numerically stable,
+	Furthermore, offer several other advantages in terms of speed of computations in many algorithms.
+	
+	Two major advantages of Trapezoidal rule are
+	\begin{itemize}
+		\item It converges to high order for smooth and periodic functions.
+		\item It can be implemented with Fast Fourier Transform.
+	\end{itemize}
+	
+	%%--------------------------------------------
+	
+	\section{Error in Trapezoidal rule}
+	
+	\begin{theorem}{Euler-Maclaurin theorem}:
+		Let $a,b$ with $a<b$ be two real number and let $p\geq1$ be an integer. Then for function $f \in \mathcal{C}_p[a,b]$ ,
+		there exist a real number $\xi$ in $(a,b)$ such that
+		\begin{equation} \label{euler_macl}
+			\int_a^b f(x)dx - \mathcal{T}_n(f) = 
+			\sum_{j=1}^{ \lfloor p/2\rfloor -1 }  h^{2j} \frac{\mathcal{B}_{2j}}{2j!}
+			\left[
+			f^{(2j-1)}(b) - f^{(2j-1)}(a) 
+			\right] -  E_n(f) 
+		\end{equation}
+		$$
+		E_n(f) = \frac{h^p  \mathcal{B}_p  }{p!}  f^{ (p)} (\xi)
+		$$
+		where $\mathcal{T}_n(f)$ is $n+1$ point Trapezoidal rule, $\mathcal{B}_j$ is $jth$ Bernoulli number.
+	\end{theorem}
+	
+	
+	The error of the composite trapezoidal rule is the difference between the value of the analytical integral and the numerical result via trapezoidal rule.
+	\begin{equation*}
+		\begin{split}
+			\mathrm{E}_n(f) =& \left| \int_a^b f(x)dx - \mathcal{T}_n (f) \right|
+			\\
+			=& \left| \sum_{j=1}^{ \lfloor p/2\rfloor -1 }  h^{2j} \frac{\mathcal{B}_{2j}}{2j!}
+			\left[
+			f^{(2j-1)}(b) - f^{(2j-1)}(a) 
+			\right] -  \frac{h^p  \mathcal{B}_p  }{p!}  f^{ (p)} (\xi) \right| 
+		\end{split}
+	\end{equation*}
+	
+	\begin{lemma}
+		Consider a periodic integrand $f \in \mathcal{C}_p[0,T]$ having period $T$. Then $f(0) = f(T)$. Then error in integration of $f$ over interval $[0,T]$ will be given by:
+		
+		$$
+		\mathrm{E}_n(f)
+		= \left| \sum_{j=1}^{ \lfloor p/2\rfloor -1 }  h^{2j} \frac{\mathcal{B}_{2j}}{2j!}
+		\left[
+		f^{(2j-1)}(T) - f^{(2j-1)}(0) 
+		\right] -  \frac{h^p  \mathcal{B}_p  }{p!}  f^{ (p)} (\xi) \right|
+		$$
+		
+		As derivative of a periodic function is always periodic with the same period.
+		$f(T) = f(0) \implies f^{(j-1)}(T) = f^{(j-1)}(0)$.
+		$$
+		\mathrm{E}_n(f) = \left| - \frac{h^p  \mathcal{B}_p  }{p!}  f^{ (p)} (\xi)\right| 
+		$$
+		$$
+		\mathcal{T}_n(f) = \int_0^T f(x)dx +  \mathcal{O}(h^p)
+		$$
+		Trapezoidal rule converges to high order for smooth and periodic functions.
+	\end{lemma}
+	
+	%%--------------------------------------------
+	
+	\section{Corrected Trapezoidal rule}
+	
+	By Euler-Maclaurin theorem, for any function $f \in \mathcal{C}_{2p+1}[a,b]$ ,
+	there exist a real number $\xi$ in $(a,b)$ such that
+	\begin{equation*}
+		\begin{split}
+			\int_a^b f(x)dx - \mathcal{T}_n(f) &=
+			\\
+			&= 
+			\sum_{j=1}^{p}  h^{2j} \frac{\mathcal{B}_{2j}}{(2j)!}
+			\left[
+			f^{(2j-1)}(b) - f^{(2j-1)}(a) 
+			\right] -  E_n(f) 
+			\\
+			&= 
+			\sum_{j=1}^{p}  h^{2j}
+			\left[\frac{\mathcal{B}_{2j}}{(2j)!}
+			\left(
+			f^{(2j-1)}(b) - f^{(2j-1)}(a) 
+			\right) \right] 
+			-\frac{h^{p+1}  \mathcal{B}_{p+1}  }{p!}  
+			f^{ (p+1)} (\xi)
+			\\
+			&=\alpha_1h^2 +\alpha_2h^4 + .... + 
+			\alpha_k h^{2p} + \mathcal{O}_n(h^{2p+1})
+		\end{split}
+	\end{equation*}
+	
+	here $\alpha_j =\frac{ \mathcal{B}_{j} }{(2j)!}\left[ f^{2j-1}(b) - f^{2j-1}(a) \right] $.
+	
+	$$
+	\int_a^b f(x)dx - \mathcal{T}_n(f) =\alpha_1h^2 +\alpha_2h^4 + .... + \alpha_k h^{2p} + \mathcal{O}_n(h^{2p+1})
+	$$
+	
+	In case for some functions if a function's derivative is not explicitly known, then we must approximate $f'(x)$ , one way to do it via Taylor's theorem.
+	\\For example
+	$$
+	\mathcal{D}f(a) = 
+	\frac{-3f(a) + 4f(a+h) -f(a+2h)}{2h} = f'(a) +\mathcal{O}(h^2)
+	$$
+	
+	A standard endpoint corrected trapezoidal is defined by $\mathcal{CT}_n$ is given by.
+	
+	$$
+	\mathcal{CT}_n(f)  = \mathcal{T}_n(f) + \frac{1}{12}
+	\left[
+	f'(b)  - f'(a)
+	\right] h^2
+	$$
+	A standard endpoint corrected trapezoidal rule is fourth-order convergent $\mathcal{O}_n(h^4)$
+	in case  $f'(x)$ is not explicitly known , we can use approximated
+	values of $f'(x)$ .
+	
+	\vspace{3mm} %5mm vertical space
+	
+	
+	Similarly, we can also define High-Order Endpoint Corrected Trapezoidal rule as
+	For $m\geq 1$ ,
+	$\alpha = (\alpha_1,\alpha_2,....,\alpha_m)$.
+	
+	
+	$\mathcal{T}_n^{\alpha}$. 
+	$$\mathcal{T}_n^{\alpha} (f) =  \mathcal{T}_n(f) +\alpha_1h^2 +.....
+	+\alpha_m h^{2m}
+	$$ 
+	it will have  error bound of $ \mathcal{O}(h^{2m+1})$.
+	
+	$\alpha = (\alpha_1,\alpha_2,....,\alpha_m)$, can be calculated without involving explicit derivatives of functions, using methods like Taylor's theorem and others. 
+	
+	\section{Pre-corrected Trapezoidal rule}
+	Consider an integral of type.
+	$$
+	\int_a^b K(x-y)\varphi(x)dx
+	$$
+	where Kernel $K(x-y)$ has singularity at $x=y$. Pre-corrected Trapezoidal rule for this integrand is
+	\begin{multline*}
+		\int_a^b K(x-y)\varphi(x)dx =\\ 
+		\frac{h}{2}
+		\left[
+		K(a-y)\varphi(a) +  K(b-y)\varphi(b) +
+		2\sum_{\substack{  	j=1 \\x_j \neq y}}^{n-1}
+		K(x_j-y)\varphi(x_j)
+		\right]  + h^2 w_{pc} 
+	\end{multline*}
+	
+	here $w_{pc}$ is a pre-calculated weights depending on kernel $K(x-y)$. In 
+	Pre-corrected Trapezoidal rule, we are taking the standard composite Trapezoidal rule and removing the term containing the integrand value at the point of singularity and add a term containing a pre-computed value,$ w_{pc}$.
+	
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	\chapter{Plan for the next semester}
+	Our objective will be to use a corrected Trapezoidal rule to compute convolution integrals of the form
+	$$
+	A[\phi](x) = \int_{\Omega}K(x-y)\phi(y)dy, \ \ \text{for} \  x\in \Omega.	
+	$$
+	
+	Such integrals are used to evaluate:
+	
+	\begin{itemize}
+		\item {Laplace Kernel} (Appears in numerous applications, e.g., Fluid dynamics, Electrostatics, Gravitational potentials....   )
+		$$
+		K(x-y):=\left\{\begin{array}{ll}
+			\frac{1}{2 \pi} \ln \frac{1}{|x-y|}, & \text{in the two dimensions} \\
+			\frac{1}{4 \pi} \frac{1}{|x-y|}, & \text{in the three dimensions} 
+		\end{array}\right.
+		$$
+		
+		\item {Helmholtz kernel} (Appears in the context of wave scattering problems)
+		$$
+		K(x-y):=\left\{\begin{array}{ll}
+			\frac{i}{4 \pi} H^{1}_{0}|x-y|, & \text{in the two dimensions} \\
+			\frac{1}{4 \pi} \frac{e^{i\kappa|x-y|}}{4\pi |x-y|}, & \text{in the three dimensions} 
+		\end{array}\right.
+		$$
+	\end{itemize}
+	
+	
+	\vspace{5mm} %5mm vertical space
+	Also pre-corrected trapezoidal rule for the logarithmic singularity in the two dimension reported in:\newline
+	\texttt{\textbf{
+			J.C. Aguilar, Y. Chen, High-order corrected trapezoidal quadrature rules for the Coulomb potential in three dimensions, Comput. Math. Appl. 49 (4) (2005) 625–631.
+	}}\newline
+	that will also be an area of study.
+	\vspace{5mm} %5mm vertical space
+	
+	
+	Also, we will study, a new technique for the computation of pre-corrected weights is reported in: 
+	
+	\texttt{\textbf{B.Wu and P.-G.Martinsson,
+			Zeta correction: A new approach to constructing corrected trapezoidal quadrature rules for singular integral operators.
+			arXiv preprint arXiv:2007.13898, 2020.
+	}}
+	
+	
+	
+\end{document}

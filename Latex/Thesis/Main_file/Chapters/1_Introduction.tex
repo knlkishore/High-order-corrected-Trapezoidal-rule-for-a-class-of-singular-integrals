@@ -1,0 +1,343 @@
+\documentclass[../document.tex]{subfiles}
+\begin{document}
+	
+	
+	
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	%----------------------------------------------------------------------------
+	Integral equations arise in numerous scientific and engineering problems.  Mathematical physics models, such as diffraction problems, scattering in quantum mechanics, conformal mapping, acoustical and waves, can be interpreted by integral equations. Unfortunately, in most cases, the underlying integrand does not have simple antiderivatives, and the  kernel function may even be singular; therefore, in such cases, if the computation of a definite integral is needed, it will have to be 
+	computed numerically.
+	
+	\vspace{3mm}
+	
+	Numerical schemes for the approximation of definite integrals are generally referred to as a quadrature rule.  Typically, a quadrature rule for the approximation of definite integral of a function $f\in C[a,b]$ is of the form
+	$$
+	I_{n}(f)=\sum_{i=i}^{n} w_{i} f\left(x_{i}\right),
+	$$
+	where $x_1,\cdots,x_n$ and $w_1,\cdots,w_n$ are referred as the quadrature nodes and
+	the weights, respectively. Quadrature points $x_i$ and weights $w_i$ is crucial for the performance and accuracy of quadrature rules, and different quadrature schemes use different rules for defining the quadrature weights and points.  
+	By now, many efficient and high-order convergent quadrature rules are known; for instance, Gaussian Quadrature \cite{atkinson2008introduction} ,Newton–Cotes formulas
+	\cite{epperson2013introduction} ,Tanh-sinh quadrature \cite{epperson2013introduction}.
+	
+	\vspace{3mm}
+	
+	Perhaps, among all existing Quadratures, the Trapezoidal rule is the most simple and numerically stable and offer several other advantages in terms of speed of computations in many algorithms \cite{marin2014corrected}.
+	It is well known that if a function $f$ is smooth and periodic in the integration interval $[a,b]$, then trapezoidal rule approximation exhibits super algebraic convergence. Moreover, if $f$ is periodic and analytic, then it will yield exponential convergence.  On the other hand, if $f$ is failing to be periodic in the integration region, the trapezoidal rule gives only second-order accuracy \cite{kapur1997high} even $f$ is analytic in the integration interval $[a,b]$. To enhance the convergence rate of the trapezoidal rule for non-periodic functions, a 'Pre-corrected trapezoidal rule' is introduced by Rokhlin in \cite{rokhlin1990end}.  Since then, a variant of the Pre-corrected trapezoidal rule for singular and non-singular integrands have been presented in the literature. For instance, see, \cite{kapur1997high,marin2012quadrature,marin2014corrected, trefethen2014exponentially}, and references therein.    
+	
+	\vspace{3mm}
+	
+	The main idea of the pre-corrected trapezoidal rule is to modify the quadrature weights in the vicinity of the singularity or at the boundaries utilizing Euler–Maclaurin summation formula. An essential feature of this quadrature scheme is that its highly accurate version can be constructed even for singular integrands by adjusting the weights locally. The necessary weights can Pre-computed and tabulated for future applications.  Owing to the capability of dealing with singular integrands, the Pre-corrected trapezoidal rule is heavily used across all scientific computing, including algorithms related to inverse Laplace transforms, special functions, wave scattering problem to name a few...
+	
+	\vspace{3mm}	
+	
+	In this project, we study a high-order quadrature scheme for singular and non-singular function utilizing a modification of the classical trapezoidal rule known as the ``Pre-corrected trapezoidal rule". Therefore, in the following sections, we briefly discuss the trapezoidal rule followed by the Pre-corrected trapezoidal rule in the next chapter.
+	
+	
+	\pagebreak
+	
+	%	\section{Technical Basics}
+	%	
+	%	
+	%	%--------------------------------------------
+	
+	%	
+	%	%--------------------------------------------
+	%	
+	%	\subsection{Degree of precision}
+	%	\emph{Degree of precision } or \emph{Degree of accuracy} of an approximation method is the largest positive integer $n$ such that the method is exact for
+	%	polynomials of Order up to $n$.
+	%	By exact, we mean that approximation is the same as an accurate value. 
+	%	
+	%	%--------------------------------------------
+	%	
+	%	\subsection{Big O notation}
+	%	let $f(x)$ and $g(x)$ be two function defined on real numbers($\mathcal{R}$), we write 
+	%	$$
+	%	f(x)   =  \mathcal{O}\left(  g(x) \right)
+	%	$$
+	%	if $\exists$  $x_0 \in \mathcal{R}$ s.t absolute value of $f(x)$ should be less than a constant multiple of $g(x)$ $\forall x \geq x_o$. i.e
+	%	$$
+	%	\forall x \geq x_o \qquad |f(x)| \leq M g(x)	
+	%	$$
+	%	Where $M$ is a constant.
+	%	%--------------------------------------------
+	%	
+	
+	
+	
+	
+	
+	
+	
+	%%--------------------------------------------
+	%
+	%\section{Asymptotic error expansions}
+	%We can use Bernoulli polynomials to expand $\int^0_1 f $ in terms of $f(x)$ and $f'(x)$ at endpoints $0,1$ which will give trapezoidal rule with end-points corrections.Also
+	%\begin{comment}
+	%$\mathcal{B}_1'(x) =1\times \mathcal{B}_{0}(x)  = 1$
+	%\end{comment}
+	%
+	%
+	%
+	%$$
+	%\int^1_0 f =  \int^1_0\mathcal{B}_1'(x) f  = \int^1_0 \mathcal{B}_{0}(x)  f =
+	%\frac{1}{2}[f(0) + f(1)] - \int^0_1 f'(x)\mathcal{B}_1(x)dx
+	%$$
+	%
+	%$$
+	%=
+	%\frac{1}{2}[f(0) + f(1)] - \frac{1}{2}\int^0_1 f(x)\mathcal{B}_2'(x)dx
+	%$$
+	%by keeping expanding this by induction we arrive at theorem 
+	%\begin{theorem}
+	%	let $m$ be a positive integer ,$f \in C^{2m}([0,1])$ .then
+	%	$$
+	%	\int^1_0 f(x)dx = 
+	%	\frac{1}{2}[f(0) + f(1)] +
+	%	\sum_{k=1}^{m}\frac{\mathcal{B}_{2k}}{(2k)!}[f^{2k-1}(0) - f^{2k-1}(0] +
+	%	\frac{1}{(2m)!}\int_0^1 f^{2m}(x) \mathcal{B}_{2m}(x)dx
+	%	$$
+	%\end{theorem}
+	%this theorem is the trapezoidal rule with m endpoint corrections
+	%, with having a Degree of precision of at least $2m-1$.
+	
+	
+	%\subsection{Richard Extrapolation}
+	%Richard Extrapolation is a method used to extrapolate the rate of convergence of a sequence of estimates. Suppose that we wish to approximate $D$, and we have an approximation method  $\mathcal{D}$ with accuracy $O(h^n)$ that depends on a parameter $h$ such that :
+	%
+	%$$
+	%\mathcal{D}(h) = D + \BigO(h^n) =  D + \alpha h^n +\BigO(h^{n+1}) 
+	%$$
+	%where $\alpha$ is some constant. Then the function $R(h,t)$
+	%$$
+	%R(h,t) = \frac{t^n\mathcal{D}(h/t)  - \mathcal{D}(h)}{t^n -1}
+	%$$
+	%where $h$ and $h/t$ are as different parameters , is  an approximation method of order $O(h^{n+1})$ as
+	%$$
+	%R(h,t) =\frac{t^n[D + \alpha\frac{h}{t}^n + \BigO(h^{n+1})   ]
+	%	- 
+	%	[D + \alpha h^n + \BigO(h^{n+1})   ]
+	%}{t^n -1} =  D + \BigO(h^{n+1})
+	%%$$
+	%
+	%
+	%
+	
+	
+	
+	
+	
+	%	%--------------------------------------------	
+	%	\subsection{Lagrange polynomial $\mathcal{L}_n(x)$ }
+	%	
+	%	For any given set of $n+1$ points $\{  (x_j,y_j)   \}$ where $j= 0,1,2 .... n$ such that 
+	%	$x_m \neq x_n \quad \text{if} \quad m \neq n$. The \emph{Lagrange
+	%		polynomial} or \emph{Lagrange interpolation formula} of these points is the lowest degree polynomial $\mathcal{L}_n$ such that
+	%	$$
+	%	\mathcal{L}_n(x_j) = y_j 
+	%	\quad \text{for} \quad 
+	%	j = 0,1 , ... ,n
+	%	$$
+	%	Such a polynomial is given by 
+	%	\begin{equation} \label{Lagrange_interpolation_formula}
+	%		\begin{split}
+	%			\mathcal{L}_n(x) = \sum_{j=0}^{n} y_j l_j(x) \\
+	%			\quad l_j(x) = 
+	%			\sum_{\substack{  	0 \leq m \leq n \\m \neq j  } } 
+	%			\frac{x - x_m}{x_j - x_m}
+	%		\end{split}
+	%	\end{equation}
+	%	where $l_j(x)$ are \emph{lagrange basis polynomials}.
+	%	
+	% It can be easily verfies that $\mathcal{L}_n(x)$ satisfies
+	%$\mathcal{L}_n(x_j) = y_j$ for $j = 0,1 , ... ,n$.
+	
+	
+	%---------------------------------------------------------------------------
+	%---------------------------------------------------------------------------
+	%--------------------------------------------------------------------------	
+	%---------------------------------------------------------------------------
+	%---------------------------------------------------------------------------
+	\section{Trapezoidal Rule}
+	\nocite{atkinson2008introduction}
+	
+	There are several classes of quadrature rules, such as  Interpolatory Quadrature, Gaussian Quadrature, among others.
+	Interpolatory Quadrature refers to Quadrature rules which gives values of integral for some interpolation of the integrand. Newton–Cotes quadrature is an interpolatory quadrature that provides integral values for Lagrange polynomial interpolation of the given integrand.	
+	
+	%---------------------------------------------------------------------------	
+	\begin{simp_num}{\normalfont\textbf{Lagrange polynomial.}} For any given set of $n+1$ points $\{  (x_j,y_j)   \}$ where $j= 0,1,2 .... n$ such that 
+		$x_m \neq x_n \quad \text{if} \quad m \neq n$. The \emph{Lagrange
+			polynomial} or \emph{Lagrange interpolation formula} of these points is the lowest degree polynomial $\mathcal{L}_n$ such that
+		$$
+		\mathcal{L}_n(x_j) = y_j 
+		\quad \text{for} \quad 
+		j = 0,1 , ... ,n
+		$$
+		Such a polynomial is given by 
+		\begin{equation} \label{Lagrange_interpolation_formula}
+			\begin{split}
+				\mathcal{L}_n(x) = \sum_{j=0}^{n} y_j l_j(x) \\
+				\quad l_j(x) = 
+				\sum_{\substack{  	0 \leq m \leq n \\m \neq j  } } 
+				\frac{x - x_m}{x_j - x_m}
+			\end{split}
+		\end{equation}
+		where $l_j(x)$ are \emph{lagrange basis polynomials}.
+		
+	\end{simp_num}
+	%---------------------------------------------------------------------------
+	
+	Consider an smooth function $f$ to be integrated over $[a,b]$, approximate it via Lagrange interpolating polynomial at $n+1$ points $\{(x_i,f(x_i))\}$ for $i = 0 ,1 ...,n$ where
+	$x_i = a + i\frac{b-a}{n}$.
+	
+	$$
+	f(x) = \sum_{j=0}^{n} f(x_j) l_j(x) + E(f) 
+	%%\prod_{j=0}^{n} (x - x_j) \frac{f^{(n+1)}(c)}{(n+1)!}
+	$$
+	where the $E(f)$ is the error due to interpolation of integrand.
+	% and $c$ lies in  $[a,b]$.
+	
+	Now, integrating over $[a,b]$
+	
+	\begin{equation*}
+		\int_a^b f(x)dx \approx \int_a^b  \sum_{j=0}^{n} f(x_j) l_j(x) dx
+		= \sum_{j=0}^{n}  f(x_j)  \int_a^b l_j(x)dx 
+	\end{equation*}
+	
+	\begin{equation} \label{quadrature}
+		\implies \int_a^b f(x)dx  \approx \sum_{i=0}^n w_i f(x_i)
+	\end{equation}
+	where $w_i = \int_a^b l_i(x)dx$.
+	
+	Here we have taken Lagrange interpolating polynomial at n+1 points. We can get different Newton–Cotes quadrature formula by taking a different number of points. For instance, by taking 2 points, we get the Trapezoidal Rule.
+	
+	
+	%---------------------------------------------------------------------------
+	\begin{simp_num}{\normalfont\textbf{Trapezoidal Rule.}}
+		Consider integral of a smooth function $f(x)$ over interval $[a,b]$.
+		By taking 2 points $(a,f(a))$ , $(b,f(b))$ and interpolating by Lagrange polynomial. we get,
+		
+		$$
+		\mathcal{L}_1(x) = l_0(x)f(a)  +  l_1(x)f(b)
+		$$
+		\begin{center}
+			where
+			$l_0(x) = \frac{x - x_1}{x_0 - x_1} $    \hspace{1cm}
+			$l_1(x) = \frac{x - x_0}{x_1 - x_0} $
+		\end{center}
+		weights are
+		$$
+		w_0 = \int_a^b l_0(x) dx 
+		= \int_a^b  \frac{x - x_1}{x_0 - x_1} dx
+		= \frac{b-a}{2}
+		$$
+		$$
+		w_1 = \int_a^b l_1(x) dx 
+		= \int_a^b  \frac{x - x_0}{x_1 - x_0} dx
+		= \frac{b-a}{2}
+		$$	
+		
+		by putting the weights we get ,
+		\begin{equation}   \label{trapz_rule_simple}
+			\Trapz^1(f) =\frac{b-a}{2}\left[ f(a)+f(b) \right]
+		\end{equation}
+		
+		and as $\mathcal{L}_1(x) \approx f(x)$
+		$$
+		\Trapz^1(f) \approx \int_a^b f(x)dx
+		$$
+		Equation-\eqref{trapz_rule_simple} is known as Trapezoidal Rule.
+	\end{simp_num}
+	
+	However, taking Higher Degree Lagrange polynomials can cause Runge's phenomenon \cite{atkinson2008introduction} which will reduce the accuracy of the Quadrature rule constructed from Higher degree Lagrange polynomials. To avoid such, we avoid taking higher Degree Lagrange polynomial. We divide the intervals into sub-intervals, and in each sub-intervals, we take an interpolating polynomial of small finite Degree. Quadrature rules constructed from such a process is called composite quadrature rules.
+	
+	\begin{simp_num}{\normalfont\textbf{Composite Trapezoidal Rule.}}
+		To get Higher order approximation from Trapezoidal Rule ,we can partition $[a,b]$ into uniform $n$ sub-intervals 
+		
+		$$[x_{i},x_{i+1}]_{i=1,2,\cdots,n}  
+		\quad, \text{where } 
+		h =\frac{b-1}{n+1},
+		\text{ }
+		x_i = a+ih $$
+		
+		and apply the trapezoidal rule to each sub-intervals,i.e
+		
+		
+		
+		\begin{equation}  \label{trapz_rule}
+			\Trapz^{n} (f) = 
+			\sum_{k=1}^{n+1}
+			\frac{x_k -x_{k-1}}{2}
+			\left[ f(x_{k-1}) +f(x_k)  \right]
+		\end{equation}
+		
+		As Lagrange interpolating polynomial are interpolation of $f(x)$.
+		
+		$$
+		\Trapz^{n-1} (f) \approx \int_a^b f(x)dx
+		$$
+		Equation-\eqref{trapz_rule} is known as Composite Trapezoidal Rule.
+	\end{simp_num}
+	%---------------------------------------------------------------------------
+	\begin{simp_num}{\normalfont\textbf{Order of Convergence.}} An sequence of quadrature rule $\{Q_n\}_{n\geq0}$ is said to converge to a point $\alpha$ with \emph{order of convergence} $p$ if
+		$$
+		|\alpha - Q_{n+1}| \le  C|\alpha -Q_n|^p  \qquad , n\geq0
+		$$
+		for some $C>0$. Smallest  $C$ at which equality holds is called  
+		{\normalfont\textbf{Rate of Convergence. {\normalfont or} Asymptotic error constant}}
+		
+	\end{simp_num}
+	
+	%---------------------------------------------------------------------------
+	\begin{examp}
+		Consider a function $f(x) = x^3 + sin(x)$ over interval $[0,1]$ ,by analytical integration we get
+		\begin{equation} \label{ex1}
+			I(f) =\int_{0}^{1} [x^3 + sin(x) ] dx= 
+			7.096976941318602\cdot 10^{-1}
+		\end{equation}
+		using the n-point Trapezoidal rule, .we get
+		
+	%	\addcontentsline{lot}{table}{	Error report  of Trapezoidal rule approximation for Integral-\eqref{ex1} }
+		\begin{table}[h]
+			\centering
+			\resizebox{\textwidth}{!}{
+				\begin{tabular}{ | c || c || c ||c |}
+					\hline
+					N & $\Trapz^{N}(f) $  & Error & Relative Error \\  
+					\hline	\hline
+					4		&  	$7.22925937571502\cdot 10^{-1}$	&	$1.32282434396419\cdot 10^{-2}$ &	$1.00$\\
+					8		&	$7.13005223491722\cdot 10^{-1}$	&	$3.30752935986134\cdot 10^{-3}$ &	$2.50 \cdot 10^{-1}$\\
+					16		&	$7.10524605712215\cdot 10^{-1}$	&	$8.26911580354528\cdot 10^{-4}$ &	$6.25\cdot 10^{-2}$\\
+					32		&	$7.09904423853836\cdot 10^{-1}$	&	$2.06729721975552\cdot 10^{-4}$ &	$1.56\cdot 10^{-2}$\\
+					64		&	$7.09749376676525\cdot 10^{-1}$	&	$5.16825446643665\cdot 10^{-5}$ &	$3.90\cdot 10^{-3}$\\
+					128		&	$7.09710614775162\cdot 10^{-1}$	&	$1.29206433016060\cdot 10^{-5}$ &	$9.76\cdot 10^{-4}$\\
+					256		&	$7.09700924293132\cdot 10^{-1}$	&	$3.23016127146136\cdot 10^{-6}$ &	$2.44\cdot 10^{-4}$\\
+					512		&	$7.09698501672206\cdot 10^{-1}$	&	$8.07540345815205\cdot 10^{-7}$ &	$6.10\cdot 10^{-5}$\\
+					1024	&	$7.09697896016948\cdot 10^{-1}$	&	$2.01885088202403\cdot 10^{-7}$ &	$1.52\cdot 10^{-5}$\\
+					\hline
+					%					\hline		
+					%					\multicolumn{4}{|c|}{Order of Convergence : 1/4}\\
+					%					\hline
+					\multicolumn{4}{|c|}{		Table 1.1                   }\\
+					\multicolumn{4}{|c|}{	Error report  of Trapezoidal rule approximation for Integral-\eqref{ex1}  } \\
+					\hline
+			\end{tabular}}
+			\caption{	Error report  of Trapezoidal rule approximation for Integral-\eqref{ex1} }
+		\end{table}
+		
+		Here $N=n-1$, $\Trapz^N(f)$  is Integral value calculated via n-point Trapezoidal rule. Error is the absolute difference in values between analytic Integration and n-point Trapezoidal rule approximation ($\Trapz_N$).
+		We get an approximation of $I(f)$ as required by the n-point Trapezoidal rule.
+		Also, we can see that with an increase in quadrature points, accuracy increases.
+		
+	\end{examp}
+	%---------------------------------------------------------------------------
+	%---------------------------------------------------------------------------
+	
+	We have defined the Trapezoidal rule and shown its applications for the Approximation of  Integrals involving smooth functions. In the next chapter, we will extend the Trapezoidal rule to approximate certain classes of singular functions while also improving its order of convergence.
+	
+	
+	
+	
+	
+\end{document}

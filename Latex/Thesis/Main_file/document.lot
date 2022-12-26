@@ -1,0 +1,15 @@
+\babel@toc {english}{}
+\addvspace {10pt}
+\contentsline {table}{\numberline {1.1}{\ignorespaces Error report of Trapezoidal rule approximation for Integral-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {ex1}\unskip \@@italiccorr )}} \relax }}{5}{table.caption.4}%
+\addvspace {10pt}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Error report of Trapezoidal rule approximation with Change of variables formula for Integral-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {ex2}\unskip \@@italiccorr )}}\relax }}{10}{table.caption.8}%
+\addvspace {10pt}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Error report of Nyström method solved via Trapezoidal rule for Integral-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {nyex}\unskip \@@italiccorr )}}\relax }}{23}{table.caption.10}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Quadrature weights $\alpha _{k}^m$ \relax }}{24}{table.caption.11}%
+\contentsline {table}{\obeyspaces 3.3 \tab Quadrature weights $\beta _{k}^m$ }{25}{equation.3.2.38}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Error report of Precorrected Trapezoidal rule approximation for Integral-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {example1}\unskip \@@italiccorr )}} \relax }}{26}{table.caption.12}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Error report of Precorrected Trapezoidal rule approximation for Integral-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {example2}\unskip \@@italiccorr )}} \relax }}{27}{table.caption.13}%
+\contentsline {table}{\obeyspaces 3.6 \tab Error report of Precorrected Trapezoidal rule approximation for Convolution-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {example3}\unskip \@@italiccorr )}} }{28}{equation.3.3.45}%
+\contentsline {table}{\obeyspaces 3.7 \tab Error report of Colton-Kress Quadrature approximation for Convolution-\textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {example3}\unskip \@@italiccorr )}} }{28}{equation.3.3.45}%
+\addvspace {10pt}
+\addvspace {10pt}

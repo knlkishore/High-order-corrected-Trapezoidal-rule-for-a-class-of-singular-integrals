@@ -1,0 +1,152 @@
+\documentclass[../document.tex]{subfiles}
+\begin{document}
+	
+\chapter{Nyström method}	
+
+	A Fredholm integral equation of the second kind is given as
+		\begin{equation} \label{Fredholm_2}
+		\varphi(t) = f(t) + \int_{a}^{b} K(t,x)\varphi(x) dx 
+		\end{equation} 
+	where $K(t,x)$ is the integral kernal and $f(t)$ is a function. The problem revolves around finding $\varphi(t)$.let $(A)$ be an integral operator given by:
+	\begin{equation*}
+		(A[\varphi])(x) = \int_a^b K(x,y)\varphi(y)dy  \quad\quad x \in [a,b]
+	\end{equation*} 
+	where $K$ is a continuous integral kernel. Now let $\{\mathcal{Q}_n \}_{n\geq 0}$ be a sequence of quadrature rules.
+	Approximating $(A)$ by  $\{\mathcal{Q}_n \}_{n\geq 0}$. 
+	$$
+	(A_n[\varphi])(x) = \sum_{k=1}^{n} w_k K(x,x_k)\varphi(x_k)  \quad\quad x \in [a,b]
+	$$
+	where $x_k = a + k\frac{b-a}{n}$ , $w_k$ are weights of quadrature rule $\mathcal{Q}_n$.
+	
+	By using $(A)$ operator, Fredholm integral equation of the second kind {equation-\eqref{Fredholm_2}} can be written as 
+	$$
+	\varphi - A\varphi = f
+	$$
+	Furthermore, by using  $\{\mathcal{Q}_n \}_{n\geq 0}$ be a  sequence of quadrature rules. The solution to the Fredholm integral equation of the second kind is approximated by 
+	
+		\begin{equation} \label{Fredholm_2_quadrature}
+			\varphi_n - A_n\varphi_n = f
+		\end{equation} 
+	
+	For $x_j , j= 0 ,1 ...,n-1$ with $x_j = a + \frac{b-a}{n}j$ , equation-\eqref{Fredholm_2_quadrature} can be written as:
+	
+	$$
+	\varphi(x_j) -\sum_{k=1}^{n} w_k K(x_j,x_k) \varphi(x_k) = f(x_j)
+	$$
+	expanding the summation
+	\begin{multline*}
+		\implies \varphi(x_j) -w_1 K(x_j,x_1)\varphi(x_1) -...... - w_n K(x_j,x_n) \varphi(x_n) = f(x_j) 
+	\end{multline*}
+	\begin{multline*}
+	\implies -w_1 K(x_j,x_1)\varphi(x_1) -......
+	-w_j K(x_j,x_j) \varphi(x_j) + \varphi(x_j)  
+	...\\...  -w_n K(x_j,x_n) \varphi(x_n) = f(x_j)  
+	\end{multline*}
+	\begin{multline*}
+	\implies -w_1 K(x_j,x_1)\varphi(x_1) -...... 
+	-\left[ w_j K(x_j,x_j) - 1\right] \varphi(x_j)  
+	...\\...  -w_n K(x_j,x_n) \varphi(x_n) = f(x_j)
+	\end{multline*}
+
+For $j=0,1,2,....,n-1$\newline
+$
+\left[ -(w_1 K(x_1,x_1) - 1)\varphi(x_1)  \right] 
+......  -w_n K(x_j,x_n) \varphi(x_n) = f(x_1)
+$
+.\\.\\.\\.\\
+$
+-w_1 K(x_j,x_1)\varphi(x_1) -...... 
+\left[ -(w_j K(x_j,x_j) - 1)\varphi(x_j)  \right] 
+......  -w_n K(x_j,x_n) \varphi(x_n) = f(x_j)
+$
+.\\.\\.\\.\\
+$
+-w_1 K(x_j,x_1)\varphi(x_1) -...... 
+\left[ -(w_n K(x_n,x_n) - 1)\varphi(x_n)  \right]  = f(x_n)
+$
+\\These equations form a linear system, which can be represented by:
+$$
+\begin{bmatrix}
+	1 -w_1 K(x_1,x_1) &   ....... & -w_n K(x_1,x_n) \\
+	.\\.\\
+	-w_1 K(x_n,x_1)   &   ....... & 1-w_n K(x_n,x_n) 
+\end{bmatrix}
+\begin{bmatrix}
+	\varphi(x_1) \\
+	.\\.\\
+	\varphi(x_n) 
+\end{bmatrix}
+=
+\begin{bmatrix}
+	f(x_1) \\
+	.\\.\\
+	f(x_n)
+\end{bmatrix}
+$$
+
+We can get $\varphi(x_i)$ values  by 
+$$
+\begin{bmatrix}
+	\varphi(x_1) \\
+	.\\.\\
+	\varphi(x_n) 
+\end{bmatrix}
+=
+\begin{bmatrix}
+	1 -w_1 K(x_1,x_1) &   ....... & -w_n K(x_1,x_n) \\
+	.\\.\\
+	-w_1 K(x_n,x_1)   &   ....... & 1-w_n K(x_n,x_n) 
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+	f(x_1) \\
+	.\\.\\
+	f(x_n)
+\end{bmatrix}
+$$
+\begin{theorem}
+	For a uniquely solvable Fredholm integral equation of the second kind with a continuous kernel and a continuous right-hand side, the Nystrom method with a convergent sequence of quadrature formulas is uniformly convergent. \newline
+	\proofname:
+	$$\|(A - A_n)\varphi\|_{\infty} =
+	\max_{x \in [a,b]}
+	\left[
+	\int_a^b K(x,y)\varphi(y)dy - \sum_{k=1}^{n} w_k K(x,x_k)\varphi(x_k)
+	\right]
+	$$
+	
+	as the sequence of quadrature formulas are uniformly convergent, as $n \rightarrow \infty$
+	$ 
+	\left[
+	\int_a^b K(x,y)\varphi(y)dy - \sum_{k=1}^{n} w_k K(x,x_k)\varphi(x_k)
+	\right] \rightarrow 0 .
+	$
+\end{theorem}
+	
+  Consider the integral equation.
+$$
+\varphi(x) -
+\frac{1}{2} \int_0^1 (x+1)e^{-xy} \varphi(y) dy =
+e^{-x} -\frac{1}{2} + \frac{1}{2} e^{-(x+1)}
+\quad \textsc{;} \quad x\in [0.1]
+$$
+
+Using Nyström method by Trapezoidal rule, we get ,
+value of $\varphi(x)$ for $x = 0 , 0.25 , 0.5 ,0.75 ,1.0$
+\begin{center}
+	\begin{tabular}{| c | c | c | c | c | c |}
+		\hline
+		N & x =0 & x=0.25 & x=0.5 & x=0.75 & x=1.0\\
+		\hline \hline
+		4 & 0.007146 & 0.008878 & 0.010816 & 0.013007 & 0.015479 \\
+		8 & 0.001788 & 0.002224 & 0.002711 & 0.003261 & 0.003882 \\
+		16 & 0.000447 & 0.000556 & 0.000678 & 0.000816 & 0.000971 \\
+		32 & 0.000112 & 0.000139 & 0.000170 & 0.000204 & 0.000243 \\
+		\hline
+	\end{tabular}
+	\begin{center}
+	Table 3.1\\
+	Nyström method by Trapezoidal rule
+	\end{center}
+\end{center}
+	
+	
+\end{document}

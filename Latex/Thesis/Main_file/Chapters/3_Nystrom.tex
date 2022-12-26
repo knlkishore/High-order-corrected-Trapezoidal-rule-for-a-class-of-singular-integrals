@@ -1,0 +1,553 @@
+\documentclass[../document.tex]{subfiles}
+\begin{document}
+	
+	\section{Nyström method}	
+	
+	A Fredholm integral equation of the second kind is given as
+	\begin{equation} \label{Fredholm_2}
+		\varphi(t) = f(t) + \int_{a}^{b} K(t,x)\varphi(x) dx 
+	\end{equation} 
+	where $K(t,x)$ is the integral kernal and $f(t)$ is a function. The problem revolves around finding $\varphi(t)$.let $(A)$ be an integral operator given by:
+	\begin{equation*}
+		(A[\varphi])(x) = \int_a^b K(x,y)\varphi(y)dy  \quad\quad x \in [a,b]
+	\end{equation*} 
+	where $K$ is a continuous integral kernel. Now let $\{\mathcal{Q}_n \}_{n\geq 0}$ be a sequence of quadrature rules.
+	Approximating $(A)$ by  $\{\mathcal{Q}_n \}_{n\geq 0}$. 
+	$$
+	(A_n[\varphi])(x) = \sum_{k=1}^{n} w_k K(x,x_k)\varphi(x_k)  \quad\quad x \in [a,b]
+	$$
+	where $x_k = a + k\frac{b-a}{n}$ , $w_k$ are weights of quadrature rule $\mathcal{Q}_n$.
+	
+	By using $(A)$ operator, Fredholm integral equation of the second kind {equation-\eqref{Fredholm_2}} can be written as 
+	$$
+	\varphi - A\varphi = f
+	$$
+	Furthermore, by using  $\{\mathcal{Q}_n \}_{n\geq 0}$ be a  sequence of quadrature rules. The solution to the Fredholm integral equation of the second kind is approximated by 
+	
+	\begin{equation} \label{Fredholm_2_quadrature}
+		\varphi_n - A_n\varphi_n = f
+	\end{equation} 
+	
+	For $x_j , j= 0 ,1 ...,n-1$ with $x_j = a + \frac{b-a}{n}j$ , equation-\eqref{Fredholm_2_quadrature} can be written as:
+	
+	$$
+	\varphi(x_j) -\sum_{k=1}^{n} w_k K(x_j,x_k) \varphi(x_k) = f(x_j)
+	$$
+	expanding the summation
+	\begin{multline*}
+		\implies \varphi(x_j) -w_1 K(x_j,x_1)\varphi(x_1) -...... - w_n K(x_j,x_n) \varphi(x_n) = f(x_j) 
+	\end{multline*}
+	\begin{multline*}
+		\implies -w_1 K(x_j,x_1)\varphi(x_1) -......
+		-w_j K(x_j,x_j) \varphi(x_j) + \varphi(x_j)  
+		...\\...  -w_n K(x_j,x_n) \varphi(x_n) = f(x_j)  
+	\end{multline*}
+	\begin{multline*}
+		\implies -w_1 K(x_j,x_1)\varphi(x_1) -...... 
+		-\left[ w_j K(x_j,x_j) - 1\right] \varphi(x_j)  
+		...\\...  -w_n K(x_j,x_n) \varphi(x_n) = f(x_j)
+	\end{multline*}
+	
+	For $j=0,1,2,....,n-1$\newline
+	$
+	\left[ -(w_1 K(x_1,x_1) - 1)\varphi(x_1)  \right] 
+	......  -w_n K(x_j,x_n) \varphi(x_n) = f(x_1)
+	$
+	.\\.\\.\\.\\
+	$
+	-w_1 K(x_j,x_1)\varphi(x_1) -...... 
+	\left[ -(w_j K(x_j,x_j) - 1)\varphi(x_j)  \right] 
+	......  -w_n K(x_j,x_n) \varphi(x_n) = f(x_j)
+	$
+	.\\.\\.\\.\\
+	$
+	-w_1 K(x_j,x_1)\varphi(x_1) -...... 
+	\left[ -(w_n K(x_n,x_n) - 1)\varphi(x_n)  \right]  = f(x_n)
+	$
+	\\These equations form a linear system, which can be represented by:
+	$$
+	\begin{bmatrix}
+		1 -w_1 K(x_1,x_1) &   ....... & -w_n K(x_1,x_n) \\
+		.\\.\\
+		-w_1 K(x_n,x_1)   &   ....... & 1-w_n K(x_n,x_n) 
+	\end{bmatrix}
+	\begin{bmatrix}
+		\varphi(x_1) \\
+		.\\.\\
+		\varphi(x_n) 
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		f(x_1) \\
+		.\\.\\
+		f(x_n)
+	\end{bmatrix}
+	$$
+	
+	We can get $\varphi(x_i)$ values  by 
+	$$
+	\begin{bmatrix}
+		\varphi(x_1) \\
+		.\\.\\
+		\varphi(x_n) 
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 -w_1 K(x_1,x_1) &   ....... & -w_n K(x_1,x_n) \\
+		.\\.\\
+		-w_1 K(x_n,x_1)   &   ....... & 1-w_n K(x_n,x_n) 
+	\end{bmatrix}^{-1}
+	\begin{bmatrix}
+		f(x_1) \\
+		.\\.\\
+		f(x_n)
+	\end{bmatrix}
+	$$
+	\begin{theorem}
+		For a uniquely solvable Fredholm integral equation of the second kind with a continuous kernel and a continuous right-hand side, the Nystrom method with a convergent sequence of quadrature formulas is uniformly convergent. \newline
+		\proofname:
+		$$\|(A - A_n)\varphi\|_{\infty} =
+		\max_{x \in [a,b]}
+		\left[
+		\int_a^b K(x,y)\varphi(y)dy - \sum_{k=1}^{n} w_k K(x,x_k)\varphi(x_k)
+		\right]
+		$$
+		
+		as the sequence of quadrature formulas are uniformly convergent, as $n \rightarrow \infty$
+		$ 
+		\left[
+		\int_a^b K(x,y)\varphi(y)dy - \sum_{k=1}^{n} w_k K(x,x_k)\varphi(x_k)
+		\right] \rightarrow 0 .
+		$
+	\end{theorem}
+	
+	\begin{examp}
+
+
+	Consider the integral equation.
+	\begin{equation} \label{nyex}
+	\varphi(x) -
+	\frac{1}{2} \int_0^1 (x+1)e^{-xy} \varphi(y) dy =
+	e^{-x} -\frac{1}{2} + \frac{1}{2} e^{-(x+1)}
+	\quad \textsc{;} \quad x\in [0.1]
+\end{equation}
+	
+	Using Nyström method by Trapezoidal rule, we get ,
+	value of $\varphi(x)$ for $x = 0 , 0.25 , 0.5 ,0.75 ,1.0$
+%	\addcontentsline{lot}{table}{ Error report  of Nyström method  solved via   Trapezoidal rule for Integral-\eqref{nyex}}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{| c || c || c || c || c || c |}
+			\hline
+			N & x =0 & x=0.25 & x=0.5 & x=0.75 & x=1.0\\
+			\hline \hline
+			4 & 0.007146 & 0.008878 & 0.010816 & 0.013007 & 0.015479 \\
+			8 & 0.001788 & 0.002224 & 0.002711 & 0.003261 & 0.003882 \\
+			16 & 0.000447 & 0.000556 & 0.000678 & 0.000816 & 0.000971 \\
+			32 & 0.000112 & 0.000139 & 0.000170 & 0.000204 & 0.000243 \\
+			\hline
+			\multicolumn{6}{|c|}{		Table 3.1                 }\\
+			\multicolumn{6}{|c|}{Error report  of Nyström method  solved via    Trapezoidal rule} \\
+			\multicolumn{6}{|c|}{ for Integral-\eqref{nyex}} \\			
+			\hline	
+		\end{tabular}
+		\caption{ Error report  of Nyström method  solved via   Trapezoidal rule for Integral-\eqref{nyex}}
+	\end{table}
+		
+	\end{examp}
+	
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	\section{Correction weights}
+	
+	%--------------------------------------------------------------------------
+	
+	\subsection{Quadrature weights $\alpha_{k}^m$ for nonsingular functions}
+	
+	Here we list Quadrature weights $\alpha_{k}^m$ for Endpoint corrected Trapeziodal rule for nonsingular functions, $\Trapz_{\alpha^m_k}$ 
+	(see \ref{non_singular_corrected_trapz_rule} in chapter-2). Equispaced endpoint corrections transform the trapezoidal rule into a high-order quadrature for functions with several continuous derivatives. The quadrature rule $\Trapz_{\alpha^m_k}$ is given by the formula:
+	
+	\begin{equation}   
+		\Trapz_{\alpha^m}^{n} = \Trapz^{n}(f)  + 
+		h \sum_{k = -\frac{m-1}{2}}^{\frac{m-1}{2}} 
+		\big(
+		f(b+kh) - f(b-kh)
+		\big)		\alpha^m_k 
+	\end{equation}
+	
+%	where
+%	$$
+%	h = \frac{b-a}{n-1} 
+%	$$
+%	\addcontentsline{lot}{table}{ Quadrature weights $\alpha_{k}^m$ }
+	\begin{table}[h]
+		\centering
+		\resizebox{\textwidth}{!}{
+			\begin{tabular}{ | c || c || c | }
+				\hline
+				m=3  	   		   & 		m=5			       &		 m=9         	  	  \\  
+				\hline
+				$0.4166666666666667\cdot 10^{-1}$ 	&  $0.5694444444444444\cdot 10^{-1}$  &     $0.6965636022927689\cdot 10^{-1}$   \\
+				& $-0.7638888888888889\cdot 10^{-2}$  & 	$-0.1877177028218695\cdot 10^{-1}$	  \\
+				&                          & 	$ 0.3643353174603175\cdot 10^{-2}$   \\
+				&						   &	$-0.3440531305114639\cdot 10^{-03}$	  \\
+				\hline \hline
+				m=17   	   		   & 		m=33			       &		 m=43	  	      \\  
+				\hline	
+				$0.7836226334784645\cdot 10^{-1}$ &	$0.8356586223906431\cdot 10^{-1}$		&	$0.8490582345073516\cdot 10^{-1}$	\\
+				$-0.2965891540255508\cdot 10^{-1}$ &	$-0.3772568901686391\cdot 10^{-1}$		&	$-0.4001723785254229\cdot 10^{-1}$	\\
+				$0.1100166460634853\cdot 10^{-1}$ &	$0.1891730418359046\cdot 10^{-1}$		&	$0.2156339227395192\cdot 10^{-1}$	\\
+				$-0.3464763345380610\cdot 10^{-2}$ &	$-0.9296840793733075\cdot 10^{-2}$		&	$-0.1173947578371037\cdot 10^{-1}$	\\
+				$0.8560837610996298\cdot 10^{-03}$ &	$0.4266725355474016\cdot 10^{-2}$		&	$0.6165108551649839\cdot 10^{-2}$	\\
+				$-0.1531936403942661\cdot 10^{-03}$ &	$-0.1781711570625946\cdot 10^{-2}$		&	$-0.3051271143145484\cdot 10^{-2}$	\\
+				$0.1753039202853559\cdot 10^{-04}$ &	$0.6648868875120770\cdot 10^{-03}$		&	$0.1403005122150106\cdot 10^{-2}$	\\
+				$-0.9595026156320693\cdot 10^{-6}$ &	$-0.2183589125884841\cdot 10^{-3}$		&	$-0.5931791433462842\cdot 10^{-3}$	\\
+				&	$0.6214890604453148\cdot 10^{-4}$		&	$0.2286250628123645\cdot 10^{-3}$	\\
+				&	$-0.1506576957395117\cdot 10^{-4}$		&	$-0.7968542809070158\cdot 10^{-4}$	\\
+				&	$0.3044582263327824\cdot 10^{-5}$		&	$0.2490991825767152\cdot 10^{-4}$	\\
+				&	$-0.4984930776384444\cdot 10^{-6}$		&	$-0.6921164516465828\cdot 10^{-5}$	\\
+				&	$0.6348092751221161\cdot 10^{-7}$		&	$0.1691476513287747\cdot 10^{-5}$	\\
+				&	$-0.5895566482845523\cdot 10^{-8}$		&	$-0.3590633248885163\cdot 10^{-6}$	\\
+				&	$0.3550460453274996\cdot 10^{-9}$		&	$0.6517156577922871\cdot 10^{-7}$	\\
+				&	$-0.1040273372883201\cdot 10^{-10}$		&	$-0.9908863655077215\cdot 10^{-8}$	\\
+				&                                &	$0.1227209060809220\cdot 10^{-8}$	\\
+				&                                &	$-0.1188834746888414\cdot 10^{-9}$	\\
+				&                                &	$0.8447408532519018\cdot 10^{-11}$	\\
+				&                                &	$-0.3914655644778233\cdot 10^{-12}$	\\
+				&                                &	$0.8806394737861057\cdot 10^{-14}$	\\
+				\hline
+				\hline
+				
+				\multicolumn{3}{|c|}{		Table 3.2                     }\\
+				\multicolumn{3}{|c|}{	Quarature weights $\alpha_{k}^m$  }\\
+				
+				\hline
+		\end{tabular}}
+		\caption{ Quadrature weights $\alpha_{k}^m$ }	
+		
+	\end{table}
+	
+	
+	%--------------------------------------------------------------------------
+	
+	\subsection{Quadrature weights $\beta_{k}^m$ for singular functions}
+	
+	
+	Given below are the values of the correction weights of the corrected trapezoidal rule $\Trapz_{\alpha^n,\beta^m}$ (see (\ref*{endpoint_singular-trapz-rule}) in chapter 2). 
+	This rule is used for the approximation of integrals of functions of the form:
+	
+	\begin{equation} 
+		g(x) = 	\tau(x)s(x) + \upsilon(x)
+	\end{equation}
+	
+	where $\upsilon(x) , \tau(x) \in \Cont^k[-kh,b+mh]$  and 
+	$s(x) \in \Cont[-b,0)\cup(0, b] $ an integrable function with a singularity at zero. Endpoint corrected Trapeziodal rule for Singular function , $\Trapz_{\alpha,\beta}^{n}$ is given by:
+	\begin{equation} 
+		\begin{split}
+			\Trapz_{\alpha,\beta}^{n} (g)= \Trapz_{R\alpha}^{n} (g) + 
+			h\sum_{j=-k,j \neq 0}^{k} \beta_j f(x_j)
+%			\\
+%			h = \frac{b}{n-1} \quad,\quad x_j = jh
+		\end{split}
+	\end{equation}
+	
+	
+	\addcontentsline{lot}{table}{\obeyspaces
+		3.3  \tab Quadrature weights $\beta_{k}^m$ }
+	\stepcounter{table}
+	
+	\begin{center}
+		\resizebox{\textwidth}{!}{
+			
+			\begin{tabular}{ | c || c || c || c | }
+				\hline
+				& $s(x)=log(x)$  &  $ s(x)=x^{\frac{1}{2}} $  & $ s(x)=x^{\frac{-1}{2}} $  \\
+				\hline
+				\multicolumn{4}{|c|}{k=2} \\
+				\hline
+				-1 &  $0.7518812338640025\cdot 10^{0}$ &  $0.4911169802967502\cdot 10^{0}$ &  $0.1635135941723353\cdot 10^{1}$  \\
+				-2 & $-0.6032109664493744\cdot 10^{0}$ & $-0.3176980828356269\cdot 10^{0}$ & $-0.1533115151360971\cdot 10^{1}$  \\
+				1 &  $0.1073866830872157\cdot 10^{1}$ &  $0.7141080571189234\cdot 10^{0}$ &  $0.2143719446940490\cdot 10^{1}$  \\
+				2 & $-0.7225370982867850\cdot 10^{0}$ & $-0.3875269545800468\cdot 10^{0}$ & $-0.1745740237302873\cdot 10^{1}$  \\
+				\hline
+				\multicolumn{4}{|c|}{k=6} \\
+				\hline
+				-1 &  $0.2051970990601252\cdot 10^{1}$ &  $0.1265469280121926\cdot 10^{1}$ &  $0.4710262208645700\cdot 10^{1}$ \\
+				-2 & $-0.7407035584542865\cdot 10^{1}$ & $-0.3802563634358600\cdot 10^{1}$ & $-0.2025763995934342\cdot 10^{2}$ \\
+				-3 &  $0.1219590847580216\cdot 10^{2}$ &  $0.5639024206133662\cdot 10^{1}$ &  $0.3690977699143199\cdot 10^{2}$ \\
+				-4 & $-0.1064623987147282\cdot 10^{2}$ & $-0.4569107975444730\cdot 10^{1}$ & $-0.3458675005305701\cdot 10^{2}$ \\
+				-5 &  $0.4799117710681772\cdot 10^{1}$ &  $0.1943368974038607\cdot 10^{1}$ &  $0.1646218520818186\cdot 10^{2}$ \\
+				-6 & $-0.8837770983721025\cdot 10^{0}$ & $-0.3411137981342110\cdot 10^{0}$ & $-0.3167334195084358\cdot 10^{1}$ \\
+				1 &  $0.2915391987686506\cdot 10^{1}$ &  $0.1878261417316043\cdot 10^{1}$ &  $0.6026290938505443\cdot 10^{1}$ \\
+				2 & $-0.8797979464048396\cdot 10^{1}$ & $-0.4649333971499730\cdot 10^{1}$ & $-0.2274216675280301\cdot 10^{2}$ \\
+				3 &  $0.1365562914252423\cdot 10^{2}$ &  $0.6444550155059975\cdot 10^{1}$ &  $0.3978973181300623\cdot 10^{2}$ \\
+				4 & $-0.1157975479644601\cdot 10^{2}$ & $-0.5048462684259424\cdot 10^{1}$ & $-0.3656337403895339\cdot 10^{2}$ \\
+				5 &  $0.5130987287355766\cdot 10^{1}$ &  $0.2104363245869803\cdot 10^{1}$ &  $0.1720419649716102\cdot 10^{2}$ \\
+				6 & $-0.9342187797694916\cdot 10^{0}$ & $-0.3644552148433214\cdot 10^{0}$ & $-0.3285178657691059\cdot 10^{1}$ \\
+				\hline
+				\multicolumn{4}{|c|}{k=10} \\
+				\hline
+				-1  & $0.3256353919777872\cdot 10^{1}$  & $0.1953545360705999\cdot 10^{1}$ &$0.7677722423353747\cdot 10^{1}$  \\
+				-2  &$-0.2096116396850468\cdot 10^{2}$  &$-0.1050311310076629\cdot 10^{2}$ &$-0.5894517227637276\cdot 10^{2}$ \\
+				-3  & $0.6872858265408605\cdot 10^{2}$  &$0.3105516048922884\cdot 10^{2}$  &$0.2140398605114418\cdot 10^{3}$  \\
+				-4  &$-0.1393153744796911\cdot 10^{3}$  &$-0.5850644296241638\cdot 10^{2}$ &$-0.4662332548976578\cdot 10^{3}$ \\
+				-5  & $0.1874446431742073\cdot 10^{3}$  &$0.7437254291687940\cdot 10^{2}$  &$0.6631353162140867\cdot 10^{3}$ \\
+				-6  &$-0.1715855846429547\cdot 10^{3}$  &$-0.6498918498319249\cdot 10^{2}$ &$-0.6351002576675097\cdot 10^{3}$ \\ 
+				-7  & $0.1061953812152787\cdot 10^{3}$  &$0.3866979933460322\cdot 10^{2}$  &$0.4083227672169233\cdot 10^{3}$\\ 
+				-8  &$-0.4269031893958787\cdot 10^{2}$  &$-0.1502289586232686\cdot 10^{2}$ &$-0.1696285390723725\cdot 10^{3}$\\
+				-9  & $0.1009036069527147\cdot 10^{2}$  &$0.3445119980743215\cdot 10^{1}$  &$0.4126838241810020\cdot 10^{2}$\\
+				-10 &$-0.1066655310499552\cdot 10^{1}$  &$-0.3544413204640886\cdot 10^{0}$ &$-0.4476202232026015\cdot 10^{1}$\\
+				1  & $0.4576078100790908\cdot 10^{1}$  &$0.2895451608911961\cdot 10^{1}$  &$0.9675787330957780\cdot 10^{1}$\\
+				2  &$-0.2469045273524281\cdot 10^{2}$  &$-0.1277820188943208\cdot 10^{2}$ &$-0.6561769910673283\cdot 10^{2}$\\
+				3  & $0.7648830198138171\cdot 10^{2}$  &$0.3534092272477722\cdot 10^{2}$  &$0.2294242274362024\cdot 10^{3}$\\
+				4  &$-0.1508194558089468\cdot 10^{3}$  &$-0.6441908403427060\cdot 10^{2}$ &$-0.4907643918974356\cdot 10^{3}$\\
+				5  & $0.1996415730837827\cdot 10^{3}$  &$0.8029833065236247\cdot 10^{2}$  &$0.6906485447124722\cdot 10^{3}$\\
+				6  &$-0.1807965537141134\cdot 10^{3}$  &$-0.6926226351772149\cdot 10^{2}$ &$-0.6568499770824342\cdot 10^{3}$\\
+				7  & $0.1110467735366555\cdot 10^{3}$  &$0.4083390088012690\cdot 10^{2}$  &$0.4202275815793937\cdot 10^{3}$\\
+				8  &$-0.4438764193424203\cdot 10^{2}$  &$-0.1575467189373152\cdot 10^{2}$ &$-0.1739340651258045\cdot 10^{3}$\\
+				9  & $0.1044548196545488\cdot 10^{2}$  &$0.3593677332216888\cdot 10^{1}$  &$0.4219582451243715\cdot 10^{2}$\\
+				10 &$-0.1100328792904271\cdot 10^{1}$  &$-0.3681517162342983\cdot 10^{0}$ &$-0.4566454997023116\cdot 10^{1}$\\
+				\hline
+				
+				\multicolumn{4}{|c|}{		Table 3.3                     }\\
+				\multicolumn{4}{|c|}{	Quadrature weights $\beta_{k}^m$  }\\
+				
+				\hline
+		\end{tabular}}
+	\end{center} 
+	
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	
+	\section{Numerical results}
+	
+	In this section, we test the performance of the pre-corrected trapezoidal quadrature rules (i.e. Endpoint corrected Trapezoidal rule, $\Trapz_{\alpha,\beta}^{n}$) to
+	approximate various integrals. 
+	
+	%--------------------------------------------------------------------------
+	\subsection{Direct acoustic obstacle scattering problem in $\Real^2$}
+	
+	Corrected trapezoidal quadrature rules have been applied to approximate the
+	numerical solution of integral equations representing scattering calculations 
+	(see \cite{aguilar2005high,aguilar2004high}).
+	Consider Integral of the form :
+	
+	\begin{equation} \label{39}
+		J(v) = \int_{-\pi}^{\pi} v(x) log(w( 1-cos(x) )) dx
+	\end{equation}
+	where $v(x)$ is a  smooth function of period $2\pi$ and $w$ is a positive real number. Integrals of the type (\ref{39}) can be applied to the direct acoustic obstacle scattering problem in $\Real^2$ (see \cite{colton1998inverse}). Such problem involves calculations of integrals of the form
+	\begin{equation}
+		g(t) = \int_{0}^{2\pi} v(x) log(4 sin^2( \frac{t-x}{2}))dx = 
+		\int_{-\pi}^{\pi}      v(x) log(2(1 - cos(t - x)))dx,
+	\end{equation}
+	
+	where $v(x)$ is a  smooth function of period $2\pi$ and $t \in [0,2\pi]$.
+	
+	
+	\begin{examp}
+		Table shows the results of the accuracy of the  Pre-corrected Trapezoidal rule
+		to approximate  
+		\begin{equation} \label{example1}
+			\int_{-\pi}^{\pi}  e^{2cos(2x) + sin(3x)} log(-\sqrt{2}(1-cos(x)) )
+		\end{equation}  
+		%  Value of this intergal is : $ -1.98018799083549 \cdot 10^{1}$ 
+		
+		Using Pre-corrected Trapeziodal rule $ \Trapz_{\alpha,\beta}^{n} $ we get:
+		
+	%	\addcontentsline{lot}{table}{ Error report  of Precorrected Trapezoidal rule approximation for Integral-\eqref{example1} }
+		\begin{table}[h]
+			\centering
+					\resizebox{\textwidth}{!}{
+			\begin{tabular}{ | c || c || c || c |}
+				\hline
+				N       & $\Trapz_{\alpha,\beta}^{n}(I)$   & Error        & Relative Error\\  
+				\hline	
+				\hline
+				90		&    $-1.98017193567999\cdot 10^{1}$  &	$1.60551555016042\cdot 10^{-4}$ &     $1.00$   \\
+				100		&	 $-1.98017639074799\cdot 10^{1}$  &  $1.16000874957223\cdot 10^{-4}$ &   $0.72$  \\
+				110		&    $-1.98017933316290\cdot 10^{1}$  &	$8.65767259057293\cdot 10^{-5}$ &    $0.52$ \\
+				120		&    $-1.98018135589064\cdot 10^{1}$  &	$6.63494484669513\cdot 10^{-5}$ &   $0.41$ \\
+				\hline		
+				\multicolumn{4}{|c|}{		Table 3.4                     }\\
+				\multicolumn{4}{|c|}{Error report  of Precorrected Trapezoidal rule approximation for Integral-\eqref{example1}   }\\
+				\hline
+			\end{tabular}}
+				\caption{ Error report  of Precorrected Trapezoidal rule approximation for Integral-\eqref{example1} }
+		\end{table}
+		Here $N=n-1$, where $n$ is the number of quadrature points used. $\Trapz_{\alpha,\beta}^{n}(I)$  is Integral value calculated via n-point Pre-corrected Trapezoidal rule. Error is the absolute difference in values between analytic Integration and n-point Pre-corrected Trapezoidal rule approximation ($\Trapz_{\alpha,\beta}^{n}$) of integrand.
+		We get high order approximation of $I(f)$ as required by the Pre-corrected  Trapezoidal rule.
+		
+		
+	\end{examp}		
+	
+	
+	
+	\begin{examp}
+		Table shows the results of the accuracy of the  Pre-corrected Trapezoidal rule
+		to approximate  
+		\begin{equation} \label{example2}
+		I =	\int_{-\pi}^{\pi}   e^{2cos(2x) + sin(3x)} log(-\sqrt{2}(1-cos(x)) )
+		\end{equation}  
+		%  Value of this intergal is : $ $-1.98018799083549 \cdot 10^{1}$ 
+		
+		Using Pre-corrected Trapeziodal rule $ \Trapz_{\alpha,\beta}^{n} $ we get:
+		
+	%	\addcontentsline{lot}{table}{ 	Error report  of Precorrected Trapezoidal rule approximation for Integral-\eqref{example2} }
+		\begin{table}[h]
+					\resizebox{\textwidth}{!}{
+			\centering
+			\begin{tabular}{ | c || c || c || c |}
+				\hline
+				N       & $\Trapz_{\alpha,\beta}^{n}(I)$   & Error        & Relative Error\\  
+				\hline	
+				\hline
+				100		&    $-9.01990790176420$   &	$0.000110944038631544$             & $ 1.00 $ \\
+				150		&	 $-9.02001887796678$  &     $3.21639479494706\cdot 10^{-8}$    & $2.89 \cdot 10^{-4}$\\
+				200		&    $-9.02001884642815$   &	$6.25311358248837\cdot 10^{-10}$   & $5.63 \cdot 10^{-6}$\\
+				250		&    $-9.02001884568026$   &	$1.22575727345975\cdot 10^{-10}$   & $1.12 \cdot 10^{-6}$\\
+				\hline		
+				\multicolumn{4}{|c|}{		Table 3.5                     }\\
+				\multicolumn{4}{|c|}{ 	Error report  of Precorrected Trapezoidal rule approximation for Integral-\eqref{example2}    }\\
+				\hline
+			\end{tabular}}
+			
+				\caption{ 	Error report  of Precorrected Trapezoidal rule approximation for Integral-\eqref{example2} }
+			
+			
+			
+		\end{table}
+		Here $N=n-1$, where $n$ is the number of quadrature points used. $\Trapz_{\alpha,\beta}^{n}(I)$  is Integral value calculated via n-point Pre-corrected Trapezoidal rule. Error is the absolute difference in values between analytic Integration and n-point Pre-corrected Trapezoidal rule approximation ($\Trapz_{\alpha,\beta}^{n}$) of integrand .
+		We get high order approximation of $I(f)$ as required by the Pre-corrected  Trapezoidal rule.
+		
+		
+	\end{examp}		
+	
+	
+	
+	%--------------------------------------------------------------------------
+	\subsection{Calculation of convolutions}
+	
+	Pre-corrected trapezoidal quadrature rules, $\Trapz_{\alpha,\beta}^{n}$ can also be used to calculate convolutions of the type:
+	
+	$$
+	(Av)(t) =     \int_{-\pi}^{\pi} v(x) log( w(1-cos(t-x)) ) dx \quad ,t \in [-\pi,\pi]
+	$$
+	Where v is a smooth function of period $2\pi$ and $w$ is a positive real number.
+	
+	
+	
+	
+	One other way to approximate such convolution is via Colton-Kress Quadrature.
+	\begin{simp_num}{\normalfont\textbf{Colton-Kress Quadrature}}
+		let v be a smooth function of period $2\pi$ and $w \in \mathbb{R}_{>0}$. Then
+		\begin{equation*}
+			(Av)(t) =     \int_{-\pi}^{\pi} v(x) log( w(1-cos(t-x)) ) dx \quad ,t \in [-\pi,\pi]
+		\end{equation*}
+		Can be approximated by
+		\begin{equation}
+			(Av)(t) \approx  (a_nv)(t) =\sum_{j=0}^{2n-1}  \textit{R}_j^n(t) v(t_j)
+		\end{equation}
+		
+		where weights $\textit{R}_j^n(t)$ are given by:
+		\begin{equation}
+			\textit{R}_j^n(t) = -\frac{1}{n}
+			\Bigg\{
+			\sum_{m=1}^{n-1} \frac{1}{m}
+			cos(\frac{mj\pi}{n})  + \frac{(-1)^j}{2n}
+			\Bigg\}
+		\end{equation}
+		
+		
+	\end{simp_num}
+	
+	
+	
+	
+	\begin{examp}
+		Table shows the results of the accuracy of the  Pre-corrected Trapezoidal rule
+		to approximate  the colvolution:
+		\begin{equation} \label{example3}
+			\int_{-\pi}^{\pi} e^{2cos(8x) + sin(9x)} log(2(1-cos(x-t)) ) \quad ,t \in[-\pi,\pi] 
+		\end{equation}  
+		%  Value of this intergal is : $ $-1.98018799083549 \cdot 10^{1}$ 
+		
+		Using Pre-corrected Trapeziodal rule $ \Trapz_{\alpha,\beta}^{n}$  		and  Colton-Kress Quadrature Approximation respectively ,we get:
+		
+
+
+		\addcontentsline{lot}{table}{\obeyspaces 3.6 \tab Error report  of Precorrected Trapezoidal rule approximation for Convolution-\eqref{example3}   } 
+		\stepcounter{table}
+		\begin{center}
+					\resizebox{\textwidth}{!}{
+			\begin{tabular}{| c || c || c || c|}
+				\hline
+				&   N          &  t = 0                &  t =$\pi$ \\
+				\hline
+				\hline
+							   & 100                   & -2.735266635099835                   &  -2.735266635099867 \\
+				Error:	       &                       & $9.744514762\cdot 10^{-6}$           &  $9.744498517\cdot 10^{-6}$  \\
+				\hline
+				                & 200                  & -2.735276379373059                   &  -2.735276379373091  \\
+				Error:	        &                      & $2.41537\cdot 10^{-10}$              &  $2.25293 \cdot 10^{-10}$ \\
+				\hline
+				                & 280                  & -2.735276379489301                   &  -2.735276379489333  \\
+				Error:	        &                      & $1.25296\cdot 10^{-10}$              &  $1.09051  \cdot 10^{-10}$\\
+				\hline
+				\multicolumn{4}{|c|}{		Table 3.6                     }\\
+				\multicolumn{4}{|c|}{ 	Error report  of Precorrected Trapezoidal rule approximation for Convolution-\eqref{example3}    }\\
+				\hline
+			\end{tabular}}
+		\end{center}	
+
+
+
+
+
+		
+
+		\addcontentsline{lot}{table}{\obeyspaces 3.7 \tab Error report  of Colton-Kress Quadrature approximation for Convolution-\eqref{example3}   } 
+		\stepcounter{table}		
+		\begin{center}
+					\resizebox{\textwidth}{!}{
+			\begin{tabular}{| c || c || c || c|}
+				\hline	
+				&   N          &  t = 0                &  t =$\pi$ \\
+				\hline
+				\hline
+				
+				        & 100          & -2.735165105378464                   &  -2.735165105378455 \\
+				Error:	&              & $1,11274219921\cdot 10^{-4}$         &  $1.11274236142\cdot 10^{-4}$  \\
+				\hline
+				        & 200          & -2.735276380239916                   &  -2.735276380239910 \\
+				Error:	&              & $6.41532\cdot 10^{-10}$      		  &  $6.25314\cdot 10^{-10}$  \\
+				\hline
+				        & 280          & -2.735276379489354                   &  -2.735276379489378 \\
+				Error:	&              & $1.09031\cdot 10^{-10}$              &  $1.25219\cdot 10^{-10}$  \\
+				\hline
+				\multicolumn{4}{|c|}{		Table 3.7                     }\\
+				\multicolumn{4}{|c|}{ 	Error report  of Colton-Kress Quadrature
+					Approximation for Convolution-\eqref{example3}    }\\
+				\hline
+			\end{tabular}}
+
+		\end{center}	
+%	\addcontentsline{lot}{table}{ Error report  of Colton-Kress Quadrature Approximation for Convolution-\eqref{example3}   }	
+		
+		 For both tables $N=n-1$, where $n$ is the number of quadrature points used. Error is the absolute difference in values between analytic Integration and n-point Quadrature approximation.
+		
+		
+	\end{examp}		
+	
+	
+	
+	
+	
+	
+	
+\end{document}

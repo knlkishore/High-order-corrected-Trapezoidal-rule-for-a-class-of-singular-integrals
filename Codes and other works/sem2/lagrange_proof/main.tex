@@ -1,0 +1,562 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\title{Lagrange Interpolation for Equally-Spaced abscissa}
+\author{Kunal Kishore }
+\date{}
+
+
+%-----------------------------------------------
+\parindent 0pt
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+
+%------------------------------------------------
+\begin{document}
+
+\maketitle
+
+
+\begin{theorem*}[Lagrange Interpolation for Equally-Spaced abscissa]
+
+Suppose $a,b$ are a pair of real number such that $a<b$ , $m \ge 3$ be an integer and $h = \frac{b-a}{m-1}$. 
+
+let $f \in C^{m}[a-mh,b+mh]$ and equispaced points $x_k$ be defined as  $x_k  = \frac{b-a}{2} +kh$.
+Then, for any real number $p$ there exists a real number 
+$\xi , -mh <\xi<mh $, such that
+
+\begin{equation}
+    f(x_0 + ph) = \sum_{k} \mathcal{A}_{k}^{m} f(x_k) + \mathcal{R}_{m-1,p}
+\end{equation}
+where $k$ varies from
+
+% \begin{align*}
+%     \frac{1}{2} (m-2) \leq k \leq \frac{1}{2}m &  \quad 
+%     \textit{for even m}\\
+%     \frac{1}{2} (m-1) \leq k \leq \frac{1}{2}(m-1) & \quad 
+%     \textit{for odd m}
+% \end{align*}
+
+
+$$
+-\frac{1}{2}(m-2) \leq k \leq \frac{1}{2}m  \quad 
+\textit{for even m}
+$$
+$$
+-\frac{1}{2}(m-1) \leq k \leq \frac{1}{2}(m-1)  \quad 
+\textit{for odd m}
+$$
+
+with
+$$
+\mathcal{A}_{k}^{m}(p) = 
+\frac{ (-1)^{\frac{m-1}{2}+k} }{
+(\frac{m-1}{2} + k)!
+(\frac{m-1}{2} - k)!
+(p-k)}
+\sum_{t}(p-t)
+$$
+and
+$$
+\mathcal{R}_{m-1,p} = \frac{ h^{m} }{m!} f^{(m)}(\xi)
+\sum_{n} (p-n)
+$$
+here both $t$ and $n$ varies same as $k$. 
+\end{theorem*}
+%---------------------------------------------------------
+\begin{proof}
+Assuming $m$ to be odd.
+For a function $f \in C^{m}[a-mh,b+mh]$ ,its Lagrange interpolation polynomial constructed from  equispaced points 
+$$
+x_{-\frac{1}{2}(m-1)} , x_{-\frac{1}{2}(m-1)+1} , .......
+, x_{\frac{1}{2}(m-1)-1} , x_{\frac{1}{2}(m-1)}
+$$
+
+
+% \begin{equation*} \label{nodes}
+% \begin{split}
+% \Bigg[
+% \left(-\frac{1}{2}(m-1) , f(-\frac{1}{2}(m-1)) \right) , 
+% \left(-\frac{1}{2}(m-1) +1 , f(-\frac{1}{2}(m-1) +1 ) \right),\\
+% ......
+% ,\left(\frac{1}{2}(m-1), f(\frac{1}{2}(m-1)) \right)
+% \Bigg]
+% \end{split}
+% \end{equation*}
+
+
+is given by
+
+
+\begin{equation} 
+    \mathcal{L}_{m-1}(x) = 
+    \sum_{ j=-\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+    l_j(x_j) f(x_j)
+\end{equation}
+and,
+
+\begin{equation} \label{main_eqn}
+f(x) =  
+\sum_{ j=-\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+l_j(x_j) f(x_j) + R_{m-1}(x)
+\end{equation}
+
+
+with,
+\begin{equation*} 
+    l_j(x) = 
+    \sum_{i = -\frac{1}{2}(m-1) , i \neq j}^{\frac{1}{2}(m-1)} 
+    \frac{x - x_i}{x - x_j}
+\end{equation*}
+    
+\begin{equation*} 
+    R_{m-1}(x) =  \frac{ f^{(m)}(\xi) }{ m! }
+    \bigg[  
+    \sum_{j = -\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+    x-x_j
+    \bigg]
+\end{equation*}
+
+
+
+We can write $x$ as $x = x_0 + ph $ for some real number $p$.
+% Assuming $m$ to be odd.
+% Constructing the Lagrange interpolation polynomial at equispaced points 
+% \begin{equation*} \label{nodes}
+% \begin{split}
+% \Bigg[
+% \left(-\frac{1}{2}(m-1) , f(-\frac{1}{2}(m-1)) \right) , 
+% \left(-\frac{1}{2}(m-1) +1 , f(-\frac{1}{2}(m-1) +1 ) \right),\\
+% ......
+% ,\left(\frac{1}{2}(m-1), f(\frac{1}{2}(m-1)) \right)
+% \Bigg]
+% \end{split}
+% \end{equation*}
+
+\begin{equation}   \label{remainder_final}
+\begin{split}
+R_{m-1}(x) &=  R_{m-1}(x_0 + ph)  
+    =\frac{ f^{(m)}(\xi) }{ m! }
+        \bigg[  
+        \sum_{j = -\frac{1}{2}(m-1) }^{ \frac{1}{2}(m-1) } 
+        x-x_j
+        \bigg] 
+    \\
+    &=\frac{ f^{(m)}(\xi) }{ m! }
+        \bigg[  
+        \Big(x - x_{-\frac{1}{2}(m-1)} \Big)
+        \Big(x - x_{-\frac{1}{2}(m-1)+1} \Big)
+        .......
+        \Big(x - x_{\frac{1}{2}(m-1)} \Big)
+        \bigg]  
+    \\
+    &=\frac{ f^{(m)}(\xi) }{ m! }
+        \bigg[  
+            \Big(
+            x_0 +ph -x_0 + \frac{1}{2}(m-1)h
+            \Big)
+            ....
+            \Big(
+            x_0 +ph -x_0 - \frac{1}{2}(m-1)h
+            \Big)
+        \bigg] 
+    \\
+    &=\frac{ f^{(m)}(\xi) }{ m! }
+        \bigg[  
+            \Big(
+            ph + \frac{1}{2}(m-1)h
+            \Big)
+            ....
+            \Big(
+            ph- \frac{1}{2}(m-1)h
+            \Big)
+        \bigg] 
+    \\
+    &=\frac{ f^{(m)}(\xi) }{ m! }
+        \bigg[  
+            h^{m}
+            \Big(
+            p + \frac{1}{2}(m-1)
+            \Big)
+            ....
+            \Big(
+            p- \frac{1}{2}(m-1)
+            \Big)
+        \bigg] 
+    \\
+    &=\frac{ f^{(m)}(\xi) }{ m! }
+        \bigg[  
+            h^{m}
+            \Big(
+            p + \frac{1}{2}(m-1)
+            \Big)
+            ....
+            \Big(
+            p- \frac{1}{2}(m-1)
+            \Big)
+        \bigg] 
+    \\
+    &=\frac{ f^{(m)}(\xi) }{ m! } h^{m}
+      \sum_{n = -\frac{1}{2}(m-1)}^{\frac{1}{2}(m-1)}
+      (p-n)
+    \\
+    &=\mathcal{R}_{m-1,p}
+\end{split}
+\end{equation}
+
+
+
+\begin{equation*}
+\begin{split}
+    l_k(x) &=  l_k( x_0 + ph ) =
+    \sum_{i = -\frac{1}{2}(m-1) , i \neq k}^{\frac{1}{2}(m-1)} 
+    \frac{x - x_i}{x_k - x_i} 
+    \\
+    &=\Bigg[\frac{
+        \big(x  - x_{-\frac{1}{2}(m-1)} \big)
+        ......
+        \big(x  - x_{k-1} \big)
+        \big(x  - x_{k+1} \big)
+        .......
+        \big(x - x_{\frac{1}{2}(m-1)} \big)
+    }{
+        \big(x_k - x_{-\frac{1}{2}(m-1)} \big)
+        ......
+        \big(x_k  - x_{k-1} \big)
+        \big(x_k  - x_{k+1} \big)
+        .......
+        \big(x - x_{\frac{1}{2}(m-1)} \big)
+    }
+    \Bigg]
+\end{split}
+\end{equation*}
+
+\begin{equation}        \label{alpha_beta}
+\begin{split}
+    &=\left[ \frac{
+                \splitfrac{
+                \Big(
+                x_0 +ph -x_0 + \frac{1}{2}(m-1)h
+                \Big)
+                ....
+                \Big(
+                x_0 +ph -x_0 - (k-1)h
+                \Big)
+                 \Big(
+                x_0 +ph -x_0 - (k+1)h
+                \Big)
+                }{
+                ....
+                \Big(
+                x_0 +ph -x_0 - \frac{1}{2}(m-1)h
+                \Big)
+                }
+    }{
+                \splitfrac{
+                \Big(
+                x_0 +kh -x_0 + \frac{1}{2}(m-1)h
+                \Big)
+                ....
+                \Big(
+                x_0 +kh -x_0 - (k-1)h
+                \Big)
+                 \Big(
+                x_0 +kh -x_0 - (k+1)h
+                \Big)
+                }{
+                ....
+                \Big(
+                x_0 +kh -x_0 - \frac{1}{2}(m-1)h
+                \Big)
+                }
+    }
+    \right]
+    \\
+    % &=\left[ \frac{
+    %             \Big(
+    %             ph + \frac{1}{2}(m-1)h
+    %             \Big)
+    %             ....
+    %             \Big(
+    %             ph - \frac{1}{2}(m-1)h
+    %             \Big)
+    %             \Big(
+    %             ph  - \frac{1}{2}(m-1)h
+    %             \Big)
+    %             ....
+    %             \Big(
+    %             ph  - \frac{1}{2}(m-1)h
+    %             \Big)
+    % }{
+    %             \Big(
+    %             ph + \frac{1}{2}(m-1)h
+    %             \Big)
+    %             ....
+    %             \Big(
+    %             ph - \frac{1}{2}(m-1)h
+    %             \Big)
+    %              \Big(
+    %             ph  - \frac{1}{2}(m-1)h
+    %             \Big)
+    %             ....
+    %             \Big(
+    %             ph  - \frac{1}{2}(m-1)h
+    %             \Big)
+    % }
+    % \right]
+    % \\
+    &=\left[ \frac{
+                \Big(
+                p + \frac{1}{2}(m-1)
+                \Big)
+                ....
+                \Big(
+                p - (k-1)
+                \Big)
+                \Big(
+                p  - (k+1)
+                \Big)
+                ....
+                \Big(
+                p  - \frac{1}{2}(m-1)
+                \Big)
+    }{
+                \Big(
+                k + \frac{1}{2}(m-1)
+                \Big)
+                ....
+                \Big(
+                k - (k-1)
+                \Big)
+                 \Big(
+                k  - (k+1)
+                \Big)
+                ....
+                \Big(
+                k  - \frac{1}{2}(m-1)
+                \Big)
+    }
+    \right] \frac{\Big(p-k\Big)}{\Big(p-k\Big)}
+\\
+   &=\left[ \frac{
+                \Big(
+                p + \frac{1}{2}(m-1)
+                \Big)
+                ....
+                \Big(
+                p - k+1
+                \Big)
+                \Big(p-k\Big)
+                \Big(
+                p  - k-1
+                \Big)
+                ....
+                \Big(
+                p  - \frac{1}{2}(m-1)
+                \Big)
+    }{
+                \Big(
+                k + \frac{1}{2}(m-1)
+                \Big)
+                ....
+                \Big(
+                k - k + 1
+                \Big)
+                 \Big(
+                k  - k -1
+                \Big)
+                ....
+                \Big(
+                k  - \frac{1}{2}(m-1)
+                \Big)
+    }
+    \frac{1}{  \Big(p-k\Big)}
+    \right] 
+\\
+    &=\frac{ \alpha }{ \beta }
+\end{split}
+\end{equation}
+
+where 
+$\alpha = 
+            \big(
+                p + \frac{1}{2}(m-1)
+                \big)
+                ....
+                \big(
+                p - k+1
+                \big)
+                \big(p-k\big)
+                \big(
+                p  - k-1
+                \big)
+                ....
+                \big(
+                p  - \frac{1}{2}(m-1)
+            \big)
+            % = \prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+$
+, $\beta =   \big(
+                k + \frac{1}{2}(m-1)
+                \big)
+                ....
+                \big(
+                k - k + 1
+                \big)
+                \big(
+                k  - k -1
+                \big)
+                ....
+                \big(
+                k  - \frac{1}{2}(m-1)
+                \big)
+                \big(p-k\big)$
+    
+Now,
+\begin{equation*}
+\begin{split}
+    \beta   &= \big(
+                k + \frac{1}{2}(m-1)
+                \big)
+                ....
+                \big(
+                k - k + 1
+                \big)
+                \big(
+                k  - k -1
+                \big)
+                ....
+                \big(
+                k  - \frac{1}{2}(m-1)
+                \big)
+                \big(p-k\big)
+    \\
+         &= \big(
+                k + \frac{1}{2}(m-1)
+                \big)
+                ....
+                \big(  2  \big)
+                \big(  1  \big)
+                \big( -1  \big)
+                \big( -2  \big)
+                ....
+                \big(
+                k  - \frac{1}{2}(m-1)
+                \big)
+                \big(p-k\big)
+    \\
+         &= \Big( k + \frac{1}{2}(m-1) \Big)! 
+                \big( -1  \big)
+                \big( -2  \big)
+                ....
+                \big(
+                k  - \frac{1}{2}(m-1)
+                \big)
+                \big(p-k\big)
+    \\
+         &= \Big( k + \frac{1}{2}(m-1) \Big)! 
+            \Big(  -1  \Big)^{\frac{m-1}{2}-k}    
+                \big( 1  \big)
+                \big( 2  \big)
+                ....
+                \big(
+                \frac{1}{2}(m-1) -k
+                \big)
+                \big(p-k\big)
+    \\
+         &= \Big( \frac{1}{2}(m-1) +k \Big)! 
+            \Big(  -1  \Big)^{\frac{m-1}{2}-k}    
+            \Big( \frac{1}{2}(m-1) -k \Big)! 
+            \Big( p - k \Big)
+    \\
+\alpha  &=   \prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  \Big(p-t\Big)
+\end{split}
+\end{equation*}
+
+putting $\alpha , \beta$ back in equation \ref{alpha_beta}
+\begin{equation*}
+\begin{split}
+l_k(x) &= 
+\frac{ \alpha }{ \beta } 
+\\
+&=
+\frac{\prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)}{
+\Big( \frac{1}{2}(m-1) +k \Big)! 
+\Big(  -1  \Big)^{\frac{m-1}{2}-k}    
+\Big( \frac{1}{2}(m-1) -k \Big)! 
+\Big( p - k \Big)
+}
+% \Big(
+%  \prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+% \Big)
+\end{split}
+\end{equation*}
+
+\begin{equation} \label{A_final}
+\begin{split}
+&=
+\frac{
+\Big(  -1  \Big)^{m-1}    
+}{
+\Big(  -1  \Big)^{m-1}    
+}
+\frac{
+\Big(  -1  \Big)^{k-\frac{m-1}{2}}    
+\prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+}{
+\Big( \frac{1}{2}(m-1) +k \Big)! 
+\Big( \frac{1}{2}(m-1) -k \Big)! 
+\Big( p - k \Big)
+}
+\\
+&=
+\frac{ (-1)^{\frac{m-1}{2}+k} }{
+(\frac{m-1}{2} + k)!
+(\frac{m-1}{2} - k)!
+(p-k)}
+\prod_{t = -\frac{1}{2}(m-1) }^{\frac{1}{2}(m-1)}  (p-t)
+\\
+&=
+\mathcal{A}_{k}^{m}(p)
+\end{split}
+\end{equation}
+
+By using equations \ref{A_final} , \ref{main_eqn} , \ref{remainder_final}
+
+$$
+f(x) = f(x_0 + ph) = \sum_{k} \mathcal{A}_{k}^{m} f(x_k) + \mathcal{R}_{m-1,p}
+$$
+where k varies from $-\frac{1}{2}(m-1) \leq k \leq \frac{1}{2}(m-1)  \quad  \textit{,} \quad
+\textit{m is odd} $.
+\vspace{5mm}
+
+
+Similarly, for even $m$, we can get the result by constructing Lagrange interpolating polynomial from equispaced points 
+$$
+x_{-\frac{1}{2}(m-2)} , x_{-\frac{1}{2}(m-2)+1} , .......
+, x_{\frac{1}{2}m-1} , x_{\frac{1}{2}m}
+$$
+
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------------------------
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{ref.bib}
+
+\end{document}

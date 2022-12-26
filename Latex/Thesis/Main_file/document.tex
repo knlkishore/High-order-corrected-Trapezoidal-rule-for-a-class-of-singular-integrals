@@ -1,0 +1,433 @@
+\documentclass[12pt,a4paper,bold]{thesis}
+% % % % % % % % % % % % % % % % %userpackages
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage[english]{babel}
+\usepackage{commath}
+\usepackage{setspace} %to use doublespace command
+
+\usepackage{graphicx} %for graphics
+\graphicspath{ {./Graphics/} }
+
+
+
+
+\usepackage[toc,page]{appendix}
+
+\usepackage{caption}
+\DeclareCaptionFormat{empty}{}
+\captionsetup{format=empty}
+\newcommand\tab[1][3mm]{\hspace*{#1}}
+
+
+\usepackage{amsthm}
+
+\usepackage{mathtools}
+
+
+\usepackage{wallpaper}   %for certificte header
+\usepackage{fancyhdr}
+
+
+%
+\usepackage{hyperref}
+\hypersetup{colorlinks=true , linkcolor=black , citecolor=blue }
+
+%for subfiles
+\usepackage{subfiles}
+
+%to label equation without chapter nos
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
+
+\parindent 0pt
+
+
+%\hyphenpenalty=10000 %removes the hyphenation completely. 
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+% % % % % % % % % % % % % % % % %instructions
+
+\theoremstyle{plain}
+\swapnumbers
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem*{theorem*}{Theorem}
+
+
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{simp_num}[theorem]{}
+
+\newtheorem*{remark}{Remark}
+
+
+
+
+
+
+%--------------------------------------------------------------------------
+%for--theorem-with-custom-numbering----------------------------------------
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+	\newenvironment{#1}[1]
+	{%
+		\renewcommand\customgenericname{#2}%
+		\renewcommand\theinnercustomgeneric{##1}%
+		\innercustomgeneric
+	}
+	{\endinnercustomgeneric}
+}
+
+\newcustomtheorem{customthm}{Theorem}
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+\theoremstyle{definition}
+\newtheorem{examp}[theorem]{Example}
+
+
+
+
+
+% % % % % % % % % % % % % % % % %new commands
+\newcommand{\head}[1]
+{\newpage
+	\vspace{3em}
+	\begin{center}
+		\LARGE{\MakeUppercase{\textbf{#1}}}
+	\end{center}
+	\vspace{3em}
+	\addcontentsline{toc}{chapter}{#1}
+}
+
+\def\blankpage{%
+	\clearpage%
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\null%
+	\clearpage}
+
+
+\newcommand{\CHAPTER}[1]
+{\newpage
+	\vspace{3em}
+	\begin{center}
+		\LARGE{\MakeUppercase{\textbf{#1}}}
+	\end{center}
+	\vspace{3em}
+}
+
+
+% % % % % % % % % % % % % % % % %Additional commands
+%\setcounter{chapter}{-1}   %to start chapters from 0
+
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%------------title-page----------------------------------------------------
+\newcommand{\thesistitle}{High-order corrected Trapezoidal rule for a class of singular integrals}
+\newcommand{\studentname}{Kunal Kishore}
+\newcommand{\studentrollno}{16093}
+\newcommand{\advisorname}{Dr. Ambuj Pandey}
+\newcommand{\degreename}{BS-MS}
+\newcommand{\subject}{Mathematics}
+\newcommand{\thesisdate}{May 2021}
+%--------------------------------------------------
+
+\def\maketitle{
+	\begin{titlepage}
+		\begin{center}
+			\begin{doublespace}
+				\textbf{\MakeUppercase{\LARGE{\thesistitle}}} \\
+				\ \\
+				
+				\normalsize{\textbf{A THESIS }} \\
+				\normalsize{\textit{submitted in partial fulfillment of the requirements}} \\
+				\normalsize{\textit{for the award of the dual degree of}} \\
+				\ \\
+				
+				\large{\textbf{Bachelor of Science-Master of Science}} \\
+				\normalsize{\textit{in}} \\
+				\large{\textbf{\MakeUppercase{\subject}}} \\
+				\normalsize{\textit{by}} \\
+				\large{\textbf{\MakeUppercase{\studentname}}} \\
+				\normalsize{\textbf{(\studentrollno)}} \\
+				%\normalsize{\textit{Under the guidance of}} \\
+				%\large{\textbf{\MakeUppercase{\advisorname}}}
+			\end{doublespace}
+			\vfill
+			\centerline{\includegraphics[scale=0.20]{iiserb.png}}
+			\ \\ 
+			\textbf{DEPARTMENT OF \MakeUppercase{\subject} \\ 
+				INDIAN INSTITUTE OF SCIENCE EDUCATION AND RESEARCH BHOPAL\\ %Flows onto two lines
+				BHOPAL - 462066} \\ 
+			\ \\
+			\textbf{\thesisdate}
+		\end{center}
+	\end{titlepage}
+}
+
+
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+
+% % % % % % % % % % % % % % % % % % % % % % %
+\begin{document}
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	
+	\frontmatter  % The pages after this command and before the command \mainmatter, will be numbered with lowercase Roman numerals.
+	
+	%--------------------------------------------------------------------------
+	%------------Title-page----------------------------------------------------
+	
+	\maketitle
+	%\addtocontents{toc}{~\hfill\textbf{Page}\par}
+	%--------------------------------------------------------------------------
+	%-------------Certificate--------------------------------------------------
+	\thispagestyle{fancy}
+	%\pagestyle{fancy}
+	\fancyhf{}
+	\ThisULCornerWallPaper{.95}{IISER_Letterhead.pdf}
+	\setlength{\wpYoffset}{1.90cm}
+	\vspace{1cm}
+	
+	
+	
+	\head{Certificate}
+	
+	
+	This is to certify that {\bf \studentname}, BS-MS (Dual Degree) student in Department of \subject, has completed bonafide work on the thesis entitled {\bf `\thesistitle'}’ under my supervision and guidance.
+	
+	\vspace{10em}
+	
+	\textbf{\thesisdate \hfill \advisorname \\ IISER Bhopal}
+	
+	\vfill
+	
+	\begin{center}
+		\begin{tabular}{ccc}
+			\textbf{Committee Member} & \textbf{Signature} & \textbf{Date} \\
+			\\
+			\rule{15em}{0.4pt} & \rule{10em}{0.4pt} & \rule{6em}{0.4pt} \\
+			\\
+			\rule{15em}{0.4pt} & \rule{10em}{0.4pt} & \rule{6em}{0.4pt} \\
+			\\
+			\rule{15em}{0.4pt} & \rule{10em}{0.4pt} & \rule{6em}{0.4pt} \\
+		\end{tabular}
+	\end{center}
+	
+	%--------------------------------------------------------------------------
+	%-------------Academic Integrity and Copyright Disclaimer------------------
+	\head{Academic Integrity and Copyright Disclaimer}
+	
+	I hereby declare that this  Thesis is my own work and due
+	acknowledgement has been made wherever the work described is based on the
+	findings of other investigators. This report has not been accepted for the award of any other degree or diploma at IISER Bhopal or any other educational institution. I also declare that I have adhered to all principles of academic honesty and integrity and
+	have not misrepresented or fabricated or falsified any idea/data/fact/source in my
+	submission.
+	
+	\vspace{4mm}
+	
+	I certify that all copyrighted material incorporated into this document is in compliance with the Indian Copyright (Amendment) Act (2012) and that I have received written permission from the copyright owners for my use of their work, which is beyond the scope of the law. I agree to indemnify and safeguard IISER Bhopal from any claims that may arise from any copyright violation.
+	
+	\vfill
+	
+	\textbf{\thesisdate \hfill \studentname \\ IISER Bhopal}
+	
+	%--------------------------------------------------------------------------
+	%-------------Acknowledgement----------------------------------------------
+	\head{Acknowledgement}
+	
+	\tab \tab Foremost, I would like to express my sincere gratitude to my advisor
+	Dr Ambuj Pandey for the continuous support of my MS study and research, for his patience, motivation, enthusiasm, and immense knowledge. His guidance helped me in all the time of research and writing of this thesis. I could not have imagined having a more suitable advisor and mentor for my MS study. 
+	
+	\vspace{4mm}
+	
+	Besides my advisor, I would like to thank the rest of my thesis committee members: Dr Saurabh Shrivastava and Dr Rahul Garg, for their encouragement and insightful comments. I would also like to thank  
+	Krishan Chakraborty for productive discussions.
+	
+	\vspace{4mm}
+	
+	I thank my fellow batchmates for the stimulating discussions, for the sleepless nights we were working together before deadlines, and for all the fun we have had in the last five years.  Last but not least, I would like to thank my family for never letting me down.
+	
+	
+	\vspace{7em}
+	
+	\begin{flushright}
+		{\bf \studentname}
+	\end{flushright}
+	
+	\newcommand{\Real}{\mathbb{R}}
+	%--------------------------------------------------------------------------
+	%-------------Abstract-----------------------------------------------------
+	\head{Abstract}
+	
+	We review the Trapezoidal rule for the computation of definite integral of functions lacking simple anti-derivatives. We then look at complex singular functions and analyze some popular techniques for the computation of its integrals. Furthermore, we look at Trapezoidal rule generalization for various class of complex singular functions.
+	
+	\vspace{3mm}
+	
+	Then, we see applications of pre-corrected Trapezoidal rule for Direct acoustic obstacle scattering problem in $\Real^2$ and quadrature rules in determining the numerical solution of Fredholm integral equation of the second kind.
+	
+	
+	
+	
+	
+	
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	
+	
+	
+	
+	%--------------------------------------------------------------------------
+	%-------------List of Symbols or Abbreviations-----------------------------
+	
+	% new commands for List of Symbols or Abbreviations
+	\newcommand{\Bernoulli}{\mathcal{B}}
+	\newcommand{\Cont}{\mathcal{C}}
+	\newcommand{\BigO}{\mathcal{O}}
+
+	
+	
+	%-------------------other_abbv---------------
+	\newcommand{\Trapz}{\mathcal{T}}
+	\newcommand{\D}{\mathcal{D}}	
+	
+	
+	
+	\head {List of Symbols or Abbreviations}
+	\begin{center}
+		\begin{tabular}{l c l}
+			$\Cont(I)$  & : & Space of all continuous function on an interval $I$\\ 
+			
+			$\Bernoulli_n(x)$ & : & Bernoulli polynomial of degree $n$ 	\\
+			
+			$\BigO(n)$ & : &  Big O notation     \\
+			
+			$\Real$ & : &  Set of all Real number \\
+			
+			$\Trapz^n(f)$ & : &  (n+1) point composite Trapezoidal rule approximation of $f$
+		\end{tabular}
+	\end{center}
+	\vfill $n$ is a positive integer
+	
+	
+	
+	%for singular matrix
+	\newcommand{\A}{\mathbb{A}}  
+	\newcommand{\Y}{\mathbb{Y}}  
+	
+	\newcommand{\B}{\mathbb{B}}  
+	\newcommand{\Z}{\mathbb{Z}}  
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	\listoffigures
+	\addcontentsline{toc}{chapter}{List of Figures}
+	
+	%--------------------------------------------------------------------------
+	%-----------------list-of-tables----------------------------------------------
+	%\head{List of Tables}
+	
+	\listoftables
+	\addcontentsline{toc}{chapter}{List of Tables}
+	
+	
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	\setcounter{tocdepth}{2}
+	\tableofcontents%Contents
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	\newpage
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%-------------------------------------CHAPTERS-----------------------------
+	
+	\mainmatter 
+	%This will restart the page counter and change the style to Arabic numbers.
+	
+	%---------------------------------------------
+	%chapter-1
+	%	\setcounter{chapter}{1}
+	%	\CHAPTER{Introduction}
+	%	\addcontentsline{toc}{chapter}{1. Introduction}
+	%	\thispagestyle{empty}%
+	\chapter{Introduction}
+	\subfile{Chapters/1_Introduction}
+	
+	
+	
+	%---------------------------------------------
+	%chapter-2
+	%	\setcounter{chapter}{2}
+	%	\setcounter{section}{0}
+	%	\setcounter{theorem}{0}	
+	%	\CHAPTER{Singular integration \& Pre-corrected trapezoidal rule}
+	%	\addcontentsline{toc}{chapter}{2. Singular integration \& Pre-corrected trapezoidal rule}
+	%	\thispagestyle{empty}%
+	\chapter{Singular integration \& Pre-corrected trapezoidal rule}
+	\subfile{Chapters/2_Singular}  
+	
+	
+	%---------------------------------------------
+	%chapter-3
+	%	\setcounter{chapter}{3}
+	%	\setcounter{section}{0}
+	%	\setcounter{theorem}{0}	
+	%	\CHAPTER{Applications of Pre-corrected trapezoidal rule }
+	%	\addcontentsline{toc}{chapter}{3. Applications of Pre-corrected trapezoidal rule}	
+	%	\thispagestyle{empty}
+	\chapter{Applications of Pre-corrected Trapezoidal rule }
+	\subfile{Chapters/3_Nystrom}
+	
+	%---------------------------------------------
+	%---------------------------------------------
+	%Concluding notes
+	%	\setcounter{section}{0}
+	%	\setcounter{theorem}{0}	
+	\subfile{Chapters/Other_section}
+	
+	
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+	%-------------------------------------BIBLIOGRAPHY-------------------------
+	\nocite{arnold2001concise,atkinson2008introduction,epperson2013introduction,colton1998inverse}
+	\nocite{kapur1997high,rokhlin1990end}
+	\bibliographystyle{unsrt}
+	\bibliography{ref.bib}
+	
+	\addcontentsline{toc}{chapter}{Bibliography}
+	
+	
+	
+\end{document}
